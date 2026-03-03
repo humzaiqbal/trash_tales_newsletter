@@ -15,7 +15,7 @@ The generated website is written to:
 - `site/assets/styles.css`
 - `site/assets/app.js`
 
-## Publish on GitHub Pages (`humzaiqbal`)
+## Publish on GitHub Pages (`trashtalesnewsletter`)
 
 1. Create a new repository on GitHub, for example `trash-tales-newsletter`.
 2. From this folder, initialize and push:
@@ -25,7 +25,7 @@ git init
 git add .
 git commit -m "Initial newsletter site"
 git branch -M main
-git remote add origin git@github.com:humzaiqbal/trash-tales-newsletter.git
+git remote add origin git@github.com:trashtalesnewsletter/trash-tales-newsletter.git
 git push -u origin main
 ```
 
@@ -34,6 +34,6 @@ git push -u origin main
    - Set **Source** to **Deploy from a branch**
    - Choose `main` branch and `/site` folder
 4. Your site will appear at:
-   - `https://humzaiqbal.github.io/trash-tales-newsletter/`
+   - `https://trashtalesnewsletter.github.io/trash-tales-newsletter/`
 
-For a root user site (`https://humzaiqbal.github.io/`), use repository name `humzaiqbal.github.io` and move generated files from `site/` to repository root.
+For a root user site (`https://trashtalesnewsletter.github.io/`), use repository name `trashtalesnewsletter.github.io` and move generated files from `site/` to repository root.
