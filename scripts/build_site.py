@@ -143,13 +143,22 @@ def parse_character_list(lines: List[str]) -> Dict[str, str]:
     return aliases
 
 
+def expand_alias_candidates(alias: str) -> set[str]:
+    candidates = {alias}
+    # Allow both "YT" and "Youtube" spellings to map to same character.
+    candidates.add(re.sub(r"\byt\b", "youtube", alias, flags=re.IGNORECASE))
+    candidates.add(re.sub(r"\byoutube\b", "yt", alias, flags=re.IGNORECASE))
+    return {c.strip() for c in candidates if c.strip()}
+
+
 def build_variant_lookup(character_defs: Dict[str, str]) -> Tuple[Dict[str, Tuple[str, str]], re.Pattern]:
     alias_lookup: Dict[str, Tuple[str, str]] = {}
     for alias, desc in character_defs.items():
-        norm = normalize_alias_lookup(alias)
-        alias_lookup[norm] = (alias, desc)
-        if not alias.lower().startswith("the "):
-            alias_lookup[normalize_alias_lookup(f"the {alias}")] = (alias, desc)
+        for candidate in expand_alias_candidates(alias):
+            norm = normalize_alias_lookup(candidate)
+            alias_lookup[norm] = (alias, desc)
+            if not candidate.lower().startswith("the "):
+                alias_lookup[normalize_alias_lookup(f"the {candidate}")] = (alias, desc)
     pattern = re.compile(r"([“\"])\s*([^\"“”]+?)((?:[’']s)?[,.!?]?)\s*([”\"])", re.IGNORECASE)
     return alias_lookup, pattern
 
