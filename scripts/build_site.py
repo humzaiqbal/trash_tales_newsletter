@@ -38,6 +38,7 @@ SKIP_LINES = {
 
 SPECIAL_TITLES = {
     "62": "Episode 62- Congrats to my CFAs!!",
+    "64": "Episode 64 - New website",
 }
 
 EXCERPT_SKIP_LINES = SKIP_LINES | {
