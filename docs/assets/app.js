@@ -26,7 +26,12 @@
   function showTip(el, x, y) {
     const character = el.dataset.character || "Character";
     const description = el.dataset.description || "";
-    tooltip.innerHTML = "<strong>" + character + "</strong><br>" + description;
+    tooltip.replaceChildren();
+    const strong = document.createElement("strong");
+    strong.textContent = character;
+    const br = document.createElement("br");
+    const text = document.createTextNode(description);
+    tooltip.append(strong, br, text);
     tooltip.classList.add("show");
     el.classList.add("active");
     active = el;

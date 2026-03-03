@@ -131,12 +131,28 @@ def parse_character_list(lines: List[str]) -> Dict[str, str]:
         if not (line.strip().startswith("“") or line.strip().startswith('"')):
             continue
 
-        last_match = q_matches[-1]
-        desc = line[last_match.end() :].strip(" :-.\t")
+        # Only aliases at the beginning of the line are alias declarations.
+        # Later quoted names can appear in the description itself.
+        leading_matches = []
+        idx = 0
+        while idx < len(line) and line[idx].isspace():
+            idx += 1
+        for m in q_matches:
+            if m.start() != idx:
+                break
+            leading_matches.append(m)
+            idx = m.end()
+            while idx < len(line) and line[idx].isspace():
+                idx += 1
+
+        if not leading_matches:
+            continue
+
+        desc = line[leading_matches[-1].end() :].strip(" :-.\t")
         if not desc:
             continue
 
-        for m in q_matches:
+        for m in leading_matches:
             key = canonical_alias(m.group(1).strip())
             if key and key not in aliases:
                 aliases[key] = desc
@@ -572,7 +588,12 @@ nav a {
   function showTip(el, x, y) {
     const character = el.dataset.character || "Character";
     const description = el.dataset.description || "";
-    tooltip.innerHTML = "<strong>" + character + "</strong><br>" + description;
+    tooltip.replaceChildren();
+    const strong = document.createElement("strong");
+    strong.textContent = character;
+    const br = document.createElement("br");
+    const text = document.createTextNode(description);
+    tooltip.append(strong, br, text);
     tooltip.classList.add("show");
     el.classList.add("active");
     active = el;
