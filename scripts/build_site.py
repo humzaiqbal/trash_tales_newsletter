@@ -49,6 +49,29 @@ EXCERPT_SKIP_LINES = SKIP_LINES | {
     "if you want to see any of the previous newsletters look here.",
 }
 
+EPISODE_TEXT_REPLACEMENTS = {
+    "65": {
+        "Tightly Knit": "Tight Knit",
+        "The Spikeballer": "The Spiker",
+        "The spikeballer": "The Spiker",
+    }
+}
+
+INLINE_LINKS = [
+    (
+        "luck surface area",
+        "https://www.codusoperandi.com/posts/increasing-your-luck-surface-area",
+    ),
+    (
+        "Assessor Recorder",
+        "https://www.sf.gov/departments--assessor-recorder",
+    ),
+    (
+        "a Yelp Review",
+        "https://www.yelp.com/biz/kowloon-tong-dessert-cafe-san-francisco?hrid=oyF7m2y0KoziaZhPGojM6A&utm_campaign=www_review_share_popup&utm_medium=copy_link&utm_source=(direct)",
+    ),
+]
+
 
 def canonical_alias(alias: str) -> str:
     return alias.strip().strip('"').strip("“").strip("”").strip()
@@ -66,6 +89,50 @@ def is_skippable_line(line: str) -> bool:
 def is_excerpt_skippable_line(line: str) -> bool:
     low = line.strip().lower()
     return low in EXCERPT_SKIP_LINES
+
+
+def normalize_episode_text(text: str, episode_label: str) -> str:
+    replacements = EPISODE_TEXT_REPLACEMENTS.get(episode_label, {})
+    for old, new in replacements.items():
+        text = text.replace(old, new)
+    return text
+
+
+def render_inline_html(
+    line: str,
+    variant_lookup: Dict[str, Tuple[str, str]],
+    variant_pattern: re.Pattern,
+) -> str:
+    remaining = line
+    rendered: List[str] = []
+
+    while remaining:
+        earliest_match = None
+        earliest_phrase = None
+        earliest_url = None
+
+        for phrase, url in INLINE_LINKS:
+            pattern = re.compile(rf"{re.escape(phrase)}\s+{re.escape(url)}")
+            match = pattern.search(remaining)
+            if not match:
+                continue
+            if earliest_match is None or match.start() < earliest_match.start():
+                earliest_match = match
+                earliest_phrase = phrase
+                earliest_url = url
+
+        if earliest_match is None:
+            rendered.append(inject_character_tooltips(remaining, variant_lookup, variant_pattern))
+            break
+
+        before = remaining[:earliest_match.start()]
+        rendered.append(inject_character_tooltips(before, variant_lookup, variant_pattern))
+        rendered.append(
+            f'<a href="{html.escape(earliest_url)}" target="_blank" rel="noreferrer">{html.escape(earliest_phrase)}</a>'
+        )
+        remaining = remaining[earliest_match.end():]
+
+    return "".join(rendered)
 
 
 def read_docx_blocks(
@@ -226,7 +293,7 @@ def block_to_html(block: dict, variant_lookup: Dict[str, Tuple[str, str]], varia
     weekdays = {"monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"}
     if lowered in weekdays:
         return f"<h2>{html.escape(line)}</h2>"
-    return f"<p>{inject_character_tooltips(line, variant_lookup, variant_pattern)}</p>"
+    return f"<p>{render_inline_html(line, variant_lookup, variant_pattern)}</p>"
 
 
 def parse_episode_number(name: str) -> int:
@@ -690,6 +757,9 @@ def build() -> None:
             image_output_dir=post_image_dir,
             image_url_prefix=f"../assets/images/{post_slug}",
         )
+        for block in blocks:
+            if block.get("type") == "paragraph":
+                block["text"] = normalize_episode_text(block["text"], episode_label)
         lines = [b["text"] for b in blocks if b.get("type") == "paragraph"]
         article_blocks = [block_to_html(b, variant_lookup, variant_pattern) for b in blocks]
         article_html = "\n        ".join([b for b in article_blocks if b])
