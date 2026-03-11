@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import datetime as dt
 import html
+import os
 import re
 import shutil
 import zipfile
@@ -11,8 +12,9 @@ from typing import Dict, List, Tuple
 from xml.etree import ElementTree as ET
 
 
-SOURCE_DIR = Path("/Users/humzaiqbal/Downloads/newsletter")
-SITE_DIR = Path("/Users/humzaiqbal/Downloads/trash_tales/site")
+ROOT_DIR = Path(__file__).resolve().parent.parent
+SOURCE_DIR = Path(os.environ.get("TRASH_TALES_SOURCE_DIR", str(Path.home() / "Downloads" / "newsletter")))
+SITE_DIR = ROOT_DIR / "site"
 POSTS_DIR = SITE_DIR / "posts"
 ASSETS_DIR = SITE_DIR / "assets"
 IMAGES_DIR = ASSETS_DIR / "images"
