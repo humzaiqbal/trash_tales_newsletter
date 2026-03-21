@@ -20,6 +20,7 @@ POSTS_DIR = SITE_DIR / "posts"
 ASSETS_DIR = SITE_DIR / "assets"
 IMAGES_DIR = ASSETS_DIR / "images"
 CHARACTER_LIST_FILE = SOURCE_DIR / "Character List.docx"
+ASSET_VERSION = "20260321"
 
 QUOTED_NICKNAMES = re.compile(r"[\"“”]([^\"“”]+)[\"“”]")
 EPISODE_NUMBER = re.compile(r"episode_(\d+)", re.IGNORECASE)
@@ -357,7 +358,7 @@ def render_post_html(
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{html.escape(title)} | Trash Tales</title>
   <meta name="description" content="Weekly Trash Tales newsletter archive by Trash Tales." />
-  <link rel="stylesheet" href="../assets/styles.css" />
+  <link rel="stylesheet" href="../assets/styles.css?v={ASSET_VERSION}" />
 </head>
 <body>
   <header class="site-header">
@@ -381,7 +382,7 @@ def render_post_html(
   </main>
 
   <div id="tooltip" class="tooltip" role="status" aria-live="polite"></div>
-  <script src="../assets/app.js"></script>
+  <script src="../assets/app.js?v={ASSET_VERSION}"></script>
 </body>
 </html>
 """
@@ -408,7 +409,7 @@ def render_index_html(posts: List[dict]) -> str:
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Trash Tales Newsletter</title>
   <meta name="description" content="Weekly Trash Tales newsletter archive by Trash Tales." />
-  <link rel="stylesheet" href="./assets/styles.css" />
+  <link rel="stylesheet" href="./assets/styles.css?v={ASSET_VERSION}" />
 </head>
 <body>
   <header class="site-header">
@@ -444,7 +445,7 @@ def render_index_html(posts: List[dict]) -> str:
       </section>
     </div>
   </main>
-  <script src="./assets/app.js" data-search-index="./assets/search-index.json"></script>
+  <script src="./assets/app.js?v={ASSET_VERSION}" data-search-index="./assets/search-index.json?v={ASSET_VERSION}"></script>
 </body>
 </html>
 """
@@ -514,8 +515,8 @@ nav a {
 
 .page-shell {
   display: grid;
-  grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
-  gap: 32px;
+  grid-template-columns: minmax(170px, 220px) minmax(0, 1fr);
+  gap: 24px;
   align-items: start;
 }
 
@@ -572,6 +573,7 @@ nav a {
   border-radius: 8px;
   color: var(--muted);
   text-decoration: none;
+  overflow-wrap: anywhere;
   transition: background 120ms ease, color 120ms ease;
 }
 
@@ -768,7 +770,23 @@ nav a {
   transform: translateY(0);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 760px) {
+  .page-shell {
+    grid-template-columns: minmax(150px, 190px) minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .episode-sidebar-inner {
+    padding: 12px;
+  }
+
+  .episode-link {
+    padding: 7px 8px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 560px) {
   .page-shell {
     grid-template-columns: 1fr;
     gap: 20px;
