@@ -20,7 +20,7 @@ POSTS_DIR = SITE_DIR / "posts"
 ASSETS_DIR = SITE_DIR / "assets"
 IMAGES_DIR = ASSETS_DIR / "images"
 CHARACTER_LIST_FILE = SOURCE_DIR / "Character List.docx"
-ASSET_VERSION = "20260321"
+ASSET_VERSION = "20260321b"
 
 QUOTED_NICKNAMES = re.compile(r"[\"“”]([^\"“”]+)[\"“”]")
 EPISODE_NUMBER = re.compile(r"episode_(\d+)", re.IGNORECASE)
@@ -330,7 +330,7 @@ def render_episode_sidebar(
     items_html = "".join(items)
     return f"""
     <aside class="episode-sidebar" aria-label="Episode navigation">
-      <div class="episode-sidebar-inner">
+      <div class="episode-sidebar-inner episode-sidebar-desktop">
         <p class="episode-sidebar-label">Browse</p>
         <h2 class="episode-sidebar-title">Episodes</h2>
         <p class="episode-sidebar-meta">{len(posts)} episodes</p>
@@ -338,6 +338,17 @@ def render_episode_sidebar(
           {items_html}
         </ol>
       </div>
+      <details class="episode-sidebar-mobile">
+        <summary class="episode-sidebar-toggle">
+          <span>Episodes</span>
+          <span class="episode-sidebar-toggle-meta">{len(posts)} episodes</span>
+        </summary>
+        <div class="episode-sidebar-mobile-body">
+          <ol class="episode-list">
+            {items_html}
+          </ol>
+        </div>
+      </details>
     </aside>
 """
 
@@ -537,6 +548,51 @@ nav a {
   border-radius: 12px;
   padding: 16px;
   background: color-mix(in oklab, white 72%, var(--bg) 28%);
+}
+
+.episode-sidebar-mobile {
+  display: none;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: color-mix(in oklab, white 72%, var(--bg) 28%);
+}
+
+.episode-sidebar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+}
+
+.episode-sidebar-toggle::-webkit-details-marker {
+  display: none;
+}
+
+.episode-sidebar-toggle::after {
+  content: "+";
+  color: var(--muted);
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.episode-sidebar-mobile[open] .episode-sidebar-toggle::after {
+  content: "-";
+}
+
+.episode-sidebar-toggle-meta {
+  margin-left: auto;
+  padding-right: 8px;
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 0.92rem;
+}
+
+.episode-sidebar-mobile-body {
+  padding: 0 12px 12px;
 }
 
 .episode-sidebar-label {
@@ -792,25 +848,21 @@ nav a {
     gap: 20px;
   }
 
-  .episode-sidebar-inner {
-    position: static;
-    max-height: none;
+  .episode-sidebar-desktop {
+    display: none;
   }
 
-  .episode-list {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 4px;
-    scrollbar-width: thin;
+  .episode-sidebar-mobile {
+    display: block;
   }
 
-  .episode-list li {
-    flex: 0 0 auto;
+  .episode-sidebar-mobile .episode-list {
+    max-height: min(55vh, 360px);
+    overflow: auto;
+    padding-right: 2px;
   }
 
-  .episode-link {
-    white-space: nowrap;
+  .episode-sidebar-mobile .episode-link {
     background: #fff;
     box-shadow: inset 0 0 0 1px var(--line);
   }
