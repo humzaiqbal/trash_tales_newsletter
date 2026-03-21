@@ -79,3 +79,108 @@
     }
   }, { passive: true });
 })();
+
+(() => {
+  const input = document.getElementById("archive-search");
+  const grid = document.getElementById("archive-grid");
+  const status = document.getElementById("search-status");
+  if (!input || !grid || !status) return;
+
+  const scriptEl = document.querySelector("script[data-search-index]");
+  const searchIndexUrl = scriptEl?.dataset.searchIndex;
+  if (!searchIndexUrl) return;
+
+  const initialHtml = grid.innerHTML;
+  let posts = [];
+  let loaded = false;
+
+  function escapeHtml(value) {
+    return value
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#39;");
+  }
+
+  function normalize(value) {
+    return value.toLowerCase().replace(/\s+/g, " ").trim();
+  }
+
+  async function loadSearchIndex() {
+    if (loaded) return posts;
+    const response = await fetch(searchIndexUrl);
+    if (!response.ok) {
+      throw new Error("Could not load search index");
+    }
+    posts = await response.json();
+    loaded = true;
+    return posts;
+  }
+
+  function buildSnippet(post, queryTerms) {
+    const source = post.content || post.excerpt || "";
+    const lowerSource = source.toLowerCase();
+    let matchIndex = -1;
+
+    for (const term of queryTerms) {
+      const idx = lowerSource.indexOf(term);
+      if (idx !== -1 && (matchIndex === -1 || idx < matchIndex)) {
+        matchIndex = idx;
+      }
+    }
+
+    if (matchIndex === -1) {
+      return post.excerpt || source.slice(0, 240);
+    }
+
+    const start = Math.max(0, matchIndex - 70);
+    const end = Math.min(source.length, matchIndex + 170);
+    let snippet = source.slice(start, end).trim();
+    if (start > 0) snippet = "..." + snippet;
+    if (end < source.length) snippet += "...";
+    return snippet;
+  }
+
+  function renderCards(results, queryTerms) {
+    grid.innerHTML = results.map((post) => `
+      <article class="post-card">
+        <p class="post-meta">${escapeHtml(post.date)}</p>
+        <h2><a href="${escapeHtml(post.url)}">${escapeHtml(post.title)}</a></h2>
+        <p>${escapeHtml(buildSnippet(post, queryTerms))}</p>
+        <a class="read-more" href="${escapeHtml(post.url)}">Read post</a>
+      </article>
+    `).join("");
+  }
+
+  function setStatus(message, hidden = false) {
+    status.textContent = message;
+    status.hidden = hidden;
+  }
+
+  async function runSearch() {
+    const query = normalize(input.value);
+    if (!query) {
+      grid.innerHTML = initialHtml;
+      setStatus("", true);
+      return;
+    }
+
+    try {
+      const data = await loadSearchIndex();
+      const terms = query.split(" ").filter(Boolean);
+      const results = data.filter((post) => {
+        const haystack = normalize(`${post.title} ${post.content}`);
+        return terms.every((term) => haystack.includes(term));
+      });
+
+      renderCards(results, terms);
+      const label = results.length === 1 ? "result" : "results";
+      setStatus(`${results.length} ${label} for "${input.value.trim()}"`);
+    } catch (error) {
+      setStatus("Search is temporarily unavailable.");
+    }
+  }
+
+  input.addEventListener("input", runSearch);
+})();

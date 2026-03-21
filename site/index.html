@@ -24,7 +24,20 @@
         Notes, stories, and characters from each week. Hover or tap a character name to see who they are.
       </p>
     </section>
-    <section class="archive-grid">
+    <section class="search-panel">
+      <label class="search-label" for="archive-search">Search newsletters</label>
+      <input
+        id="archive-search"
+        class="search-input"
+        type="search"
+        placeholder="Search keywords across all episodes"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <p class="search-help">Search titles and full article text across the archive.</p>
+      <p id="search-status" class="search-status" hidden></p>
+    </section>
+    <section id="archive-grid" class="archive-grid">
       
       <article class="post-card">
         <p class="post-meta">Mar 17, 2026</p>
@@ -476,5 +489,6 @@
 
     </section>
   </main>
+  <script src="./assets/app.js" data-search-index="./assets/search-index.json"></script>
 </body>
 </html>

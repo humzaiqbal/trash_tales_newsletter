@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import datetime as dt
 import html
+import json
 import os
 import re
 import shutil
@@ -352,20 +353,19 @@ def render_post_html(
 """
 
 
-def render_index_html(posts: List[dict]) -> str:
-    cards = []
-    for p in posts:
-        cards.append(
-            f"""
+def render_post_card(post: dict, summary: str) -> str:
+    return f"""
       <article class="post-card">
-        <p class="post-meta">{html.escape(p['date'])}</p>
-        <h2><a href="{html.escape(p['url'])}">{html.escape(p['title'])}</a></h2>
-        <p>{html.escape(p['excerpt'])}</p>
-        <a class="read-more" href="{html.escape(p['url'])}">Read post</a>
+        <p class="post-meta">{html.escape(post['date'])}</p>
+        <h2><a href="{html.escape(post['url'])}">{html.escape(post['title'])}</a></h2>
+        <p>{html.escape(summary)}</p>
+        <a class="read-more" href="{html.escape(post['url'])}">Read post</a>
       </article>
 """
-        )
-    cards_html = "".join(cards)
+
+
+def render_index_html(posts: List[dict]) -> str:
+    cards_html = "".join(render_post_card(p, p["excerpt"]) for p in posts)
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -392,10 +392,24 @@ def render_index_html(posts: List[dict]) -> str:
         Notes, stories, and characters from each week. Hover or tap a character name to see who they are.
       </p>
     </section>
-    <section class="archive-grid">
+    <section class="search-panel">
+      <label class="search-label" for="archive-search">Search newsletters</label>
+      <input
+        id="archive-search"
+        class="search-input"
+        type="search"
+        placeholder="Search keywords across all episodes"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <p class="search-help">Search titles and full article text across the archive.</p>
+      <p id="search-status" class="search-status" hidden></p>
+    </section>
+    <section id="archive-grid" class="archive-grid">
       {cards_html}
     </section>
   </main>
+  <script src="./assets/app.js" data-search-index="./assets/search-index.json"></script>
 </body>
 </html>
 """
@@ -481,6 +495,39 @@ nav a {
   margin: 0 0 24px;
   color: var(--muted);
   max-width: 680px;
+}
+
+.search-panel {
+  margin: 0 0 24px;
+}
+
+.search-label {
+  display: block;
+  margin: 0 0 8px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.search-input {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+}
+
+.search-input:focus {
+  outline: 2px solid color-mix(in oklab, var(--accent) 30%, white 70%);
+  border-color: var(--accent);
+}
+
+.search-help,
+.search-status {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
 }
 
 .archive-grid {
@@ -710,6 +757,111 @@ nav a {
     }
   }, { passive: true });
 })();
+
+(() => {
+  const input = document.getElementById("archive-search");
+  const grid = document.getElementById("archive-grid");
+  const status = document.getElementById("search-status");
+  if (!input || !grid || !status) return;
+
+  const scriptEl = document.querySelector("script[data-search-index]");
+  const searchIndexUrl = scriptEl?.dataset.searchIndex;
+  if (!searchIndexUrl) return;
+
+  const initialHtml = grid.innerHTML;
+  let posts = [];
+  let loaded = false;
+
+  function escapeHtml(value) {
+    return value
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#39;");
+  }
+
+  function normalize(value) {
+    return value.toLowerCase().replace(/\s+/g, " ").trim();
+  }
+
+  async function loadSearchIndex() {
+    if (loaded) return posts;
+    const response = await fetch(searchIndexUrl);
+    if (!response.ok) {
+      throw new Error("Could not load search index");
+    }
+    posts = await response.json();
+    loaded = true;
+    return posts;
+  }
+
+  function buildSnippet(post, queryTerms) {
+    const source = post.content || post.excerpt || "";
+    const lowerSource = source.toLowerCase();
+    let matchIndex = -1;
+
+    for (const term of queryTerms) {
+      const idx = lowerSource.indexOf(term);
+      if (idx !== -1 && (matchIndex === -1 || idx < matchIndex)) {
+        matchIndex = idx;
+      }
+    }
+
+    if (matchIndex === -1) {
+      return post.excerpt || source.slice(0, 240);
+    }
+
+    const start = Math.max(0, matchIndex - 70);
+    const end = Math.min(source.length, matchIndex + 170);
+    let snippet = source.slice(start, end).trim();
+    if (start > 0) snippet = "..." + snippet;
+    if (end < source.length) snippet += "...";
+    return snippet;
+  }
+
+  function renderCards(results, queryTerms) {
+    grid.innerHTML = results.map((post) => `
+      <article class="post-card">
+        <p class="post-meta">${escapeHtml(post.date)}</p>
+        <h2><a href="${escapeHtml(post.url)}">${escapeHtml(post.title)}</a></h2>
+        <p>${escapeHtml(buildSnippet(post, queryTerms))}</p>
+        <a class="read-more" href="${escapeHtml(post.url)}">Read post</a>
+      </article>
+    `).join("");
+  }
+
+  function setStatus(message, hidden = false) {
+    status.textContent = message;
+    status.hidden = hidden;
+  }
+
+  async function runSearch() {
+    const query = normalize(input.value);
+    if (!query) {
+      grid.innerHTML = initialHtml;
+      setStatus("", true);
+      return;
+    }
+
+    try {
+      const data = await loadSearchIndex();
+      const terms = query.split(" ").filter(Boolean);
+      const results = data.filter((post) => {
+        const haystack = normalize(`${post.title} ${post.content}`);
+        return terms.every((term) => haystack.includes(term));
+      });
+
+      renderCards(results, terms);
+      const label = results.length === 1 ? "result" : "results";
+      setStatus(`${results.length} ${label} for "${input.value.trim()}"`);
+    } catch (error) {
+      setStatus("Search is temporarily unavailable.");
+    }
+  }
+
+  input.addEventListener("input", runSearch);
+})();
 """
     (ASSETS_DIR / "app.js").write_text(app_js, encoding="utf-8")
 
@@ -774,9 +926,16 @@ def build() -> None:
                 "date": mtime.strftime("%b %d, %Y"),
                 "url": post_url,
                 "excerpt": excerpt_from_lines(lines),
+                "content": " ".join(
+                    line for line in lines if line and not is_excerpt_skippable_line(line)
+                ),
             }
         )
 
+    (ASSETS_DIR / "search-index.json").write_text(
+        json.dumps(index_posts, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
     (SITE_DIR / "index.html").write_text(render_index_html(index_posts), encoding="utf-8")
 
     print(f"Built {len(index_posts)} posts into {SITE_DIR}")

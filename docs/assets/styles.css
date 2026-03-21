@@ -77,6 +77,39 @@ nav a {
   max-width: 680px;
 }
 
+.search-panel {
+  margin: 0 0 24px;
+}
+
+.search-label {
+  display: block;
+  margin: 0 0 8px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.search-input {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+}
+
+.search-input:focus {
+  outline: 2px solid color-mix(in oklab, var(--accent) 30%, white 70%);
+  border-color: var(--accent);
+}
+
+.search-help,
+.search-status {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
 .archive-grid {
   display: grid;
   grid-template-columns: 1fr;
