@@ -307,13 +307,49 @@ def parse_episode_label(name: str) -> str:
     return m.group(1) if m else "unknown"
 
 
+def render_episode_sidebar(
+    posts: List[dict],
+    current_url: str | None = None,
+    url_prefix: str = "",
+) -> str:
+    items = []
+    for post in posts:
+        href = post["url"]
+        if url_prefix and href.startswith("./"):
+            href = f"{url_prefix}{href[2:]}"
+        elif url_prefix:
+            href = f"{url_prefix}{href}"
+        is_current = post["url"] == current_url
+        active_class = " active" if is_current else ""
+        current_attr = ' aria-current="page"' if is_current else ""
+        items.append(
+            f'<li><a class="episode-link{active_class}" href="{html.escape(href)}"{current_attr}>'
+            f"{html.escape(post['title'])}</a></li>"
+        )
+    items_html = "".join(items)
+    return f"""
+    <aside class="episode-sidebar" aria-label="Episode navigation">
+      <div class="episode-sidebar-inner">
+        <p class="episode-sidebar-label">Browse</p>
+        <h2 class="episode-sidebar-title">Episodes</h2>
+        <p class="episode-sidebar-meta">{len(posts)} episodes</p>
+        <ol class="episode-list">
+          {items_html}
+        </ol>
+      </div>
+    </aside>
+"""
+
+
 def render_post_html(
     title: str,
     article_html: str,
-    post_date: dt.datetime,
+    post_date: str,
     canonical_name: str,
+    posts: List[dict],
+    current_url: str,
 ) -> str:
-    date_fmt = post_date.strftime("%b %d, %Y")
+    sidebar_html = render_episode_sidebar(posts, current_url=current_url, url_prefix="../")
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -327,15 +363,13 @@ def render_post_html(
   <header class="site-header">
     <div class="site-header-inner">
       <a class="brand" href="../index.html">TRASH TALES</a>
-      <nav>
-        <a href="../index.html">Archive</a>
-      </nav>
     </div>
   </header>
 
-  <main class="container">
-    <article class="post">
-      <p class="post-meta">{date_fmt}</p>
+  <main class="container page-shell">
+    {sidebar_html}
+    <article class="post page-main">
+      <p class="post-meta">{post_date}</p>
       <h1>{html.escape(title)}</h1>
       <section class="post-content">
         {article_html}
@@ -366,6 +400,7 @@ def render_post_card(post: dict, summary: str) -> str:
 
 def render_index_html(posts: List[dict]) -> str:
     cards_html = "".join(render_post_card(p, p["excerpt"]) for p in posts)
+    sidebar_html = render_episode_sidebar(posts)
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -379,35 +414,35 @@ def render_index_html(posts: List[dict]) -> str:
   <header class="site-header">
     <div class="site-header-inner">
       <a class="brand" href="./index.html">TRASH TALES</a>
-      <nav>
-        <a href="./index.html">Archive</a>
-      </nav>
     </div>
   </header>
 
-  <main class="container">
-    <section class="hero">
-      <h1>Weekly Newsletter Archive</h1>
-      <p>
-        Notes, stories, and characters from each week. Hover or tap a character name to see who they are.
-      </p>
-    </section>
-    <section class="search-panel">
-      <label class="search-label" for="archive-search">Search newsletters</label>
-      <input
-        id="archive-search"
-        class="search-input"
-        type="search"
-        placeholder="Search keywords across all episodes"
-        autocomplete="off"
-        spellcheck="false"
-      />
-      <p class="search-help">Search titles and full article text across the archive.</p>
-      <p id="search-status" class="search-status" hidden></p>
-    </section>
-    <section id="archive-grid" class="archive-grid">
-      {cards_html}
-    </section>
+  <main class="container page-shell">
+    {sidebar_html}
+    <div class="page-main">
+      <section class="hero">
+        <h1>Weekly Newsletter Archive</h1>
+        <p>
+          Notes, stories, and characters from each week. Hover or tap a character name to see who they are.
+        </p>
+      </section>
+      <section class="search-panel">
+        <label class="search-label" for="archive-search">Search newsletters</label>
+        <input
+          id="archive-search"
+          class="search-input"
+          type="search"
+          placeholder="Search keywords across all episodes"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <p class="search-help">Search titles and full article text across the archive.</p>
+        <p id="search-status" class="search-status" hidden></p>
+      </section>
+      <section id="archive-grid" class="archive-grid">
+        {cards_html}
+      </section>
+    </div>
   </main>
   <script src="./assets/app.js" data-search-index="./assets/search-index.json"></script>
 </body>
@@ -450,12 +485,11 @@ html, body {
 }
 
 .site-header-inner {
-  max-width: 860px;
+  max-width: 1180px;
   margin: 0 auto;
   padding: 14px 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
 .brand {
@@ -473,9 +507,86 @@ nav a {
 }
 
 .container {
-  max-width: 860px;
+  max-width: 1180px;
   margin: 0 auto;
   padding: 30px 20px 64px;
+}
+
+.page-shell {
+  display: grid;
+  grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.page-main {
+  min-width: 0;
+}
+
+.episode-sidebar {
+  align-self: start;
+}
+
+.episode-sidebar-inner {
+  position: sticky;
+  top: 84px;
+  max-height: calc(100vh - 104px);
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  background: color-mix(in oklab, white 72%, var(--bg) 28%);
+}
+
+.episode-sidebar-label {
+  margin: 0 0 2px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.episode-sidebar-title {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.episode-sidebar-meta {
+  margin: 2px 0 14px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.episode-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.episode-link {
+  display: block;
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: background 120ms ease, color 120ms ease;
+}
+
+.episode-link:hover,
+.episode-link:focus-visible {
+  background: #fff;
+  color: var(--text);
+  outline: none;
+}
+
+.episode-link.active {
+  background: #fff;
+  color: var(--text);
+  font-weight: 600;
+  box-shadow: inset 0 0 0 1px var(--line);
 }
 
 .hero h1,
@@ -655,6 +766,36 @@ nav a {
 .tooltip.show {
   opacity: 1;
   transform: translateY(0);
+}
+
+@media (max-width: 900px) {
+  .page-shell {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .episode-sidebar-inner {
+    position: static;
+    max-height: none;
+  }
+
+  .episode-list {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+  }
+
+  .episode-list li {
+    flex: 0 0 auto;
+  }
+
+  .episode-link {
+    white-space: nowrap;
+    background: #fff;
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
 }
 
 @media (max-width: 640px) {
@@ -916,24 +1057,47 @@ def build() -> None:
         article_blocks = [block_to_html(b, variant_lookup, variant_pattern) for b in blocks]
         article_html = "\n        ".join([b for b in article_blocks if b])
 
-        mtime = dt.datetime.fromtimestamp(docx_path.stat().st_mtime)
-        page = render_post_html(title, article_html, mtime, docx_path.name)
-        (POSTS_DIR / f"{post_slug}.html").write_text(page, encoding="utf-8")
-
         index_posts.append(
             {
                 "title": title,
-                "date": mtime.strftime("%b %d, %Y"),
+                "date": dt.datetime.fromtimestamp(docx_path.stat().st_mtime).strftime("%b %d, %Y"),
                 "url": post_url,
                 "excerpt": excerpt_from_lines(lines),
                 "content": " ".join(
                     line for line in lines if line and not is_excerpt_skippable_line(line)
                 ),
+                "article_html": article_html,
+                "canonical_name": docx_path.name,
             }
         )
 
+    for post in index_posts:
+        post_slug = Path(post["url"]).stem
+        page = render_post_html(
+            post["title"],
+            post["article_html"],
+            post["date"],
+            post["canonical_name"],
+            index_posts,
+            post["url"],
+        )
+        (POSTS_DIR / f"{post_slug}.html").write_text(page, encoding="utf-8")
+
     (ASSETS_DIR / "search-index.json").write_text(
-        json.dumps(index_posts, ensure_ascii=False, indent=2),
+        json.dumps(
+            [
+                {
+                    "title": post["title"],
+                    "date": post["date"],
+                    "url": post["url"],
+                    "excerpt": post["excerpt"],
+                    "content": post["content"],
+                }
+                for post in index_posts
+            ],
+            ensure_ascii=False,
+            indent=2,
+        ),
         encoding="utf-8",
     )
     (SITE_DIR / "index.html").write_text(render_index_html(index_posts), encoding="utf-8")
