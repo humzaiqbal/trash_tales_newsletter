@@ -65,6 +65,10 @@ INLINE_LINKS = [
         "https://www.codusoperandi.com/posts/increasing-your-luck-surface-area",
     ),
     (
+        "meme song",
+        "https://www.youtube.com/watch?v=aMhHWWIxK-4&feature=youtu.be",
+    ),
+    (
         "Assessor Recorder",
         "https://www.sf.gov/departments--assessor-recorder",
     ),
@@ -114,7 +118,7 @@ def render_inline_html(
         earliest_url = None
 
         for phrase, url in INLINE_LINKS:
-            pattern = re.compile(rf"{re.escape(phrase)}\s+{re.escape(url)}")
+            pattern = re.compile(rf"{re.escape(phrase)}\s+\(?{re.escape(url)}\)?")
             match = pattern.search(remaining)
             if not match:
                 continue
