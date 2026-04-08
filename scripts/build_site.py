@@ -56,6 +56,10 @@ EPISODE_TEXT_REPLACEMENTS = {
         "Tightly Knit": "Tight Knit",
         "The Spikeballer": "The Spiker",
         "The spikeballer": "The Spiker",
+    },
+    "69": {
+        'Shoutout to “The Politician” for': "",
+        'Shoutout to "The Politician" for': "",
     }
 }
 
