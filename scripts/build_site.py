@@ -60,6 +60,10 @@ EPISODE_TEXT_REPLACEMENTS = {
     "69": {
         'Shoutout to “The Politician” for': "",
         'Shoutout to "The Politician" for': "",
+    },
+    "70": {
+        "newsletter https://www.citysmartnews.com/": "newsletter called city smart https://www.citysmartnews.com/",
+        "newsletter (https://www.citysmartnews.com/)": "newsletter called city smart (https://www.citysmartnews.com/)",
     }
 }
 
@@ -67,6 +71,10 @@ INLINE_LINKS = [
     (
         "luck surface area",
         "https://www.codusoperandi.com/posts/increasing-your-luck-surface-area",
+    ),
+    (
+        "city smart",
+        "https://www.citysmartnews.com/",
     ),
     (
         "meme song",
