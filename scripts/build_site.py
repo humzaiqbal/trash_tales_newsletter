@@ -278,6 +278,96 @@ FLASHCARDS = [
         "back": "No. It can make recommendations and amendments, but passage occurs through the Board process.",
     },
     {
+        "deck": "Class 3: Ballot Measures and Charter",
+        "front": "What are the four types of law?",
+        "back": "Constitutional law, statutory law, administrative law, and case law.",
+    },
+    {
+        "deck": "Class 3: Ballot Measures and Charter",
+        "front": "What is constitutional law?",
+        "back": "Law that outlines the essential form and function of government and is the highest law in a jurisdiction.",
+    },
+    {
+        "deck": "Class 3: Ballot Measures and Charter",
+        "front": "What is statutory law?",
+        "back": "Law created by legislative bodies.",
+    },
+    {
+        "deck": "Class 3: Ballot Measures and Charter",
+        "front": "What is administrative law?",
+        "back": "Rules and regulations issued by executive agencies.",
+    },
+    {
+        "deck": "Class 3: Ballot Measures and Charter",
+        "front": "What is case law?",
+        "back": "Law created by judicial opinion that interprets the meaning and application of other types of law.",
+    },
+    {
+        "deck": "Class 3: Ballot Measures and Charter",
+        "front": "What are the six major steps of San Francisco's legislative process?",
+        "back": "Write legislation, introduce legislation, legislative committee hearing, legislative committee recommendation, full Board vote, and mayoral action.",
+    },
+    {
+        "deck": "Class 3: Ballot Measures and Charter",
+        "front": "Who may cause legislation to be written in the normal legislative process?",
+        "back": "Commissions, Supervisors, the Mayor, and departments.",
+    },
+    {
+        "deck": "Class 3: Ballot Measures and Charter",
+        "front": "What are the two main ways to put something on the ballot?",
+        "back": "Initiative and referral.",
+    },
+    {
+        "deck": "Class 3: Ballot Measures and Charter",
+        "front": "What is an initiative?",
+        "back": "A ballot measure placed by the people after gathering a sufficient number of signatures.",
+    },
+    {
+        "deck": "Class 3: Ballot Measures and Charter",
+        "front": "What is a referral?",
+        "back": "A ballot measure placed by the government, with procedures that vary depending on the type of measure.",
+    },
+    {
+        "deck": "Class 3: Ballot Measures and Charter",
+        "front": "What types of measures might appear on the ballot?",
+        "back": "Ordinances, resolutions, legislative referenda, bond measures, recalls, charter adoption, charter repeal, charter amendments, and charter revisions.",
+    },
+    {
+        "deck": "Class 3: Ballot Measures and Charter",
+        "front": "What is the difference between enacted and effective legislation?",
+        "back": "Enacted means legislation is formally passed and becomes law on the books. Effective means it becomes enforceable.",
+    },
+    {
+        "deck": "Class 3: Ballot Measures and Charter",
+        "front": "Which city officials may be recalled?",
+        "back": "Board of Education members, Supervisors, the Controller, Treasurer, Mayor, District Attorney, City Administrator, Sheriff, and Ethics Commissioners.",
+    },
+    {
+        "deck": "Class 3: Ballot Measures and Charter",
+        "front": "Can a Supervisor send a Charter amendment to the ballot?",
+        "back": "Yes, with Board majority approval.",
+    },
+    {
+        "deck": "Class 3: Ballot Measures and Charter",
+        "front": "Can the Mayor send an ordinance to the ballot?",
+        "back": "Yes, acting independently.",
+    },
+    {
+        "deck": "Class 3: Ballot Measures and Charter",
+        "front": "How many voter signatures are needed to place a charter amendment on the ballot by petition?",
+        "back": "At least 10% of registered voters in San Francisco, which was about 50,000 people as of November 2024.",
+    },
+    {
+        "deck": "Class 3: Ballot Measures and Charter",
+        "front": "Who has the authority to change the San Francisco Charter?",
+        "back": "The people.",
+    },
+    {
+        "deck": "Class 3: Ballot Measures and Charter",
+        "front": "What are the key dates in the Class 3 political history timeline?",
+        "back": "1849: California Constitution adopted. 1850: first State Legislature creates SF County and SF City. 1856: Consolidation Act. 1879: second California Constitution revision. 1898: first SF Charter adopted. 1932: second SF Charter revision. 1996: third SF Charter revision.",
+    },
+    {
         "deck": "Class 4: Planning and Housing",
         "front": "What are the General Plan, Housing Element, and Planning Code?",
         "back": "The General Plan is the long-term roadmap for physical development. The Housing Element describes actions to meet the RHNA target. The Planning Code is the local statutory law implementing the roadmap.",
