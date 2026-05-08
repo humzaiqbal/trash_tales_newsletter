@@ -20,7 +20,7 @@ POSTS_DIR = SITE_DIR / "posts"
 ASSETS_DIR = SITE_DIR / "assets"
 IMAGES_DIR = ASSETS_DIR / "images"
 CHARACTER_LIST_FILE = SOURCE_DIR / "Character List.docx"
-ASSET_VERSION = "20260321b"
+ASSET_VERSION = "20260508a"
 
 QUOTED_NICKNAMES = re.compile(r"[\"“”]([^\"“”]+)[\"“”]")
 EPISODE_NUMBER = re.compile(r"episode_(\d+)", re.IGNORECASE)
@@ -88,6 +88,290 @@ INLINE_LINKS = [
         "a Yelp Review",
         "https://www.yelp.com/biz/kowloon-tong-dessert-cafe-san-francisco?hrid=oyF7m2y0KoziaZhPGojM6A&utm_campaign=www_review_share_popup&utm_medium=copy_link&utm_source=(direct)",
     ),
+]
+
+
+FLASHCARDS = [
+    {
+        "deck": "Class 1: SF Government Basics",
+        "front": "What is the formal name of San Francisco?",
+        "back": "The City and County of San Francisco.",
+    },
+    {
+        "deck": "Class 1: SF Government Basics",
+        "front": "What are the three levels of government discussed in class?",
+        "back": "Federal, state, and local.",
+    },
+    {
+        "deck": "Class 1: SF Government Basics",
+        "front": "How long are elected officials' terms in San Francisco?",
+        "back": "Four years.",
+    },
+    {
+        "deck": "Class 1: SF Government Basics",
+        "front": "Name the elected officials/entities listed for San Francisco.",
+        "back": "Mayor, City Attorney, Public Defender, Sheriff, Board of Supervisors, Assessor-Recorder, City College Board of Trustees, Treasurer, District Attorney, and Board of Education.",
+    },
+    {
+        "deck": "Class 1: SF Government Basics",
+        "front": "What is the simple template for San Francisco's executive branch?",
+        "back": "Elected officials appoint commissions, commissions oversee departments, and departments do the work.",
+    },
+    {
+        "deck": "Class 1: SF Government Basics",
+        "front": "Roughly how many commissions and departments does San Francisco have?",
+        "back": "About 51-60 commissions and about 51-60 departments.",
+    },
+    {
+        "deck": "Class 1: SF Government Basics",
+        "front": "What is the approximate total San Francisco government budget for FY25-26?",
+        "back": "About $16 billion.",
+    },
+    {
+        "deck": "Class 1: SF Government Basics",
+        "front": "What are the two broad categories of the city budget?",
+        "back": "The General Fund and enterprise departments.",
+    },
+    {
+        "deck": "Class 1: SF Government Basics",
+        "front": "What are enterprise departments?",
+        "back": "Self-supporting government agencies that generate their own revenue.",
+    },
+    {
+        "deck": "Class 1: SF Government Basics",
+        "front": "Which groups are social or political entities rather than official government bodies?",
+        "back": "Democratic clubs and neighborhood associations.",
+    },
+    {
+        "deck": "Class 1: SF Government Basics",
+        "front": "Which groups are official advisory entities where citizens can provide input?",
+        "back": "Citizens' Advisory Committees and the Civil Grand Jury.",
+    },
+    {
+        "deck": "Class 1: SF Government Basics",
+        "front": "What is the long-term roadmap for the city's physical development, and what law implements it?",
+        "back": "The General Plan is the roadmap. The Planning Code is the local statutory law that implements it.",
+    },
+    {
+        "deck": "Class 1: SF Government Basics",
+        "front": "What are examples of mandates and state preemption in housing policy?",
+        "back": "California requiring local governments to meet RHNA targets is a mandate. SB 423 overriding local planning is state preemption.",
+    },
+    {
+        "deck": "Class 1: SF Government Basics",
+        "front": "What are BART and ABAG?",
+        "back": "BART is a regional public transit agency. ABAG is a council of governments that coordinates land use and housing policy across the region.",
+    },
+    {
+        "deck": "Class 2: Law and Legislation",
+        "front": "What does the Mayor do?",
+        "back": "The Mayor is the chief executive and head of the executive branch.",
+    },
+    {
+        "deck": "Class 2: Law and Legislation",
+        "front": "What does the Board of Supervisors do?",
+        "back": "The Board of Supervisors is the legislative body.",
+    },
+    {
+        "deck": "Class 2: Law and Legislation",
+        "front": "What does the Board of Education oversee?",
+        "back": "The San Francisco Unified School District (SFUSD).",
+    },
+    {
+        "deck": "Class 2: Law and Legislation",
+        "front": "What does the City College Board of Trustees oversee?",
+        "back": "San Francisco's community college.",
+    },
+    {
+        "deck": "Class 2: Law and Legislation",
+        "front": "What does the Treasurer do?",
+        "back": "Serves as banker, tax collector, and investment manager for San Francisco.",
+    },
+    {
+        "deck": "Class 2: Law and Legislation",
+        "front": "What does the Assessor-Recorder do?",
+        "back": "Assesses taxable property and maintains records, including deeds.",
+    },
+    {
+        "deck": "Class 2: Law and Legislation",
+        "front": "What does the District Attorney do?",
+        "back": "Prosecutes crimes on behalf of the people of San Francisco.",
+    },
+    {
+        "deck": "Class 2: Law and Legislation",
+        "front": "What does the Public Defender do?",
+        "back": "Provides legal representation to people who cannot afford it.",
+    },
+    {
+        "deck": "Class 2: Law and Legislation",
+        "front": "What does the City Attorney do?",
+        "back": "Acts as the city's legal department, drafts legislation, and represents the city in court.",
+    },
+    {
+        "deck": "Class 2: Law and Legislation",
+        "front": "What does the Sheriff do?",
+        "back": "Manages county jails, oversees court and government-building security, and handles civil enforcement duties such as warrants and eviction orders.",
+    },
+    {
+        "deck": "Class 2: Law and Legislation",
+        "front": "What is constitutional law?",
+        "back": "The highest law in a jurisdiction; it outlines the essential form and function of government.",
+    },
+    {
+        "deck": "Class 2: Law and Legislation",
+        "front": "What is statutory law?",
+        "back": "Law created by a legislative body, often called statutes at the state and federal levels.",
+    },
+    {
+        "deck": "Class 2: Law and Legislation",
+        "front": "What is administrative law?",
+        "back": "Rules or regulations issued by executive agencies that provide detailed implementation of existing statutory law.",
+    },
+    {
+        "deck": "Class 2: Law and Legislation",
+        "front": "What is case law?",
+        "back": "Law created by judicial opinion that interprets the meaning and proper application of other types of law.",
+    },
+    {
+        "deck": "Class 2: Law and Legislation",
+        "front": "How many members are on the Board of Supervisors, and how many members are on standing legislative committees?",
+        "back": "The Board of Supervisors has 11 members. Standing legislative committees have 3 members.",
+    },
+    {
+        "deck": "Class 2: Law and Legislation",
+        "front": "How is the President of the Board of Supervisors chosen?",
+        "back": "By a vote of the Supervisors.",
+    },
+    {
+        "deck": "Class 2: Law and Legislation",
+        "front": "Who assigns membership of legislative committees?",
+        "back": "The President of the Board.",
+    },
+    {
+        "deck": "Class 2: Law and Legislation",
+        "front": "What are the three main legislative actions the Board of Supervisors can take?",
+        "back": "Ordinances, resolutions, and motions.",
+    },
+    {
+        "deck": "Class 2: Law and Legislation",
+        "front": "What is an ordinance?",
+        "back": "A form of statutory law adopted through the legislative process.",
+    },
+    {
+        "deck": "Class 2: Law and Legislation",
+        "front": "What is a resolution?",
+        "back": "A declaration of policy, subject to statutory law.",
+    },
+    {
+        "deck": "Class 2: Law and Legislation",
+        "front": "What is a motion?",
+        "back": "A procedural act within the Board's exclusive jurisdiction, such as rules of order.",
+    },
+    {
+        "deck": "Class 2: Law and Legislation",
+        "front": "What may happen when a proposed ordinance is heard by a legislative committee?",
+        "back": "The committee may hear expert testimony, receive public comment, vote to make a recommendation, and propose or adopt amendments.",
+    },
+    {
+        "deck": "Class 2: Law and Legislation",
+        "front": "Can a legislative committee itself pass an ordinance?",
+        "back": "No. It can make recommendations and amendments, but passage occurs through the Board process.",
+    },
+    {
+        "deck": "Class 4: Planning and Housing",
+        "front": "What are the General Plan, Housing Element, and Planning Code?",
+        "back": "The General Plan is the long-term roadmap for physical development. The Housing Element describes actions to meet the RHNA target. The Planning Code is the local statutory law implementing the roadmap.",
+    },
+    {
+        "deck": "Class 4: Planning and Housing",
+        "front": "How long is each RHNA cycle?",
+        "back": "Eight years.",
+    },
+    {
+        "deck": "Class 4: Planning and Housing",
+        "front": "What is San Francisco's current RHNA target and deadline?",
+        "back": "San Francisco must approve 82,000 new housing units by 2031.",
+    },
+    {
+        "deck": "Class 4: Planning and Housing",
+        "front": "How is the Planning Commission appointed?",
+        "back": "Four members are appointed by the Mayor with Board approval, and three are appointed by the Board.",
+    },
+    {
+        "deck": "Class 4: Planning and Housing",
+        "front": "Which government entity drafts the Housing Element?",
+        "back": "The San Francisco Planning Department.",
+    },
+    {
+        "deck": "Class 4: Planning and Housing",
+        "front": "Which government entity sets the Regional Housing Needs Distribution (RHND)?",
+        "back": "The California Department of Housing and Community Development (HCD).",
+    },
+    {
+        "deck": "Class 4: Planning and Housing",
+        "front": "Which government entity enforces the Planning Code?",
+        "back": "The San Francisco Planning Department.",
+    },
+    {
+        "deck": "Class 4: Planning and Housing",
+        "front": "Which government entity processes legislative referrals for General Plan and Planning Code consistency?",
+        "back": "The San Francisco Planning Department.",
+    },
+    {
+        "deck": "Class 4: Planning and Housing",
+        "front": "What Planning Commission action can allow a project on a parcel not zoned for that use without changing statutory law?",
+        "back": "A Conditional Use Authorization.",
+    },
+    {
+        "deck": "Class 4: Planning and Housing",
+        "front": "What is the difference between the RHNA target and SB 423?",
+        "back": "The RHNA target is a state-imposed mandate. SB 423 is an example of state preemption overriding certain local land use controls.",
+    },
+    {
+        "deck": "Class 4: Planning and Housing",
+        "front": "If you get a speeding ticket in San Francisco, which court would you appear before?",
+        "back": "San Francisco Superior Court.",
+    },
+    {
+        "deck": "Class 4: Planning and Housing",
+        "front": "What happened in 1849 in the political history timeline?",
+        "back": "The California Constitution was adopted.",
+    },
+    {
+        "deck": "Class 4: Planning and Housing",
+        "front": "What happened in 1850 in the political history timeline?",
+        "back": "The first State Legislature created San Francisco County and San Francisco City.",
+    },
+    {
+        "deck": "Class 4: Planning and Housing",
+        "front": "What happened in 1856 in the political history timeline?",
+        "back": "The Consolidation Act.",
+    },
+    {
+        "deck": "Class 4: Planning and Housing",
+        "front": "What happened in 1879 in the political history timeline?",
+        "back": "The second California Constitution was adopted as a revision.",
+    },
+    {
+        "deck": "Class 4: Planning and Housing",
+        "front": "What happened in 1898 in the political history timeline?",
+        "back": "The San Francisco Charter was adopted.",
+    },
+    {
+        "deck": "Class 4: Planning and Housing",
+        "front": "When were the Planning Commission, Planning Code, and Planning Department created?",
+        "back": "Planning Commission: 1917. Planning Code: 1921. Planning Department: 1942.",
+    },
+    {
+        "deck": "Class 4: Planning and Housing",
+        "front": "When was the first General Plan adopted?",
+        "back": "1945.",
+    },
+    {
+        "deck": "Class 4: Planning and Housing",
+        "front": "What happened in 1960 and 1996 in the political history timeline?",
+        "back": "1960: second San Francisco Planning Code. 1996: third San Francisco Charter revision.",
+    },
 ]
 
 
@@ -369,6 +653,21 @@ def render_episode_sidebar(
 """
 
 
+def render_site_header(home_href: str, quiz_href: str, active: str = "") -> str:
+    quiz_active = " active" if active == "quiz" else ""
+    quiz_current = ' aria-current="page"' if active == "quiz" else ""
+    return f"""
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="{home_href}">TRASH TALES</a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a class="site-nav-link{quiz_active}" href="{quiz_href}"{quiz_current}>Government class quiz</a>
+      </nav>
+    </div>
+  </header>
+"""
+
+
 def render_post_html(
     title: str,
     article_html: str,
@@ -378,6 +677,7 @@ def render_post_html(
     current_url: str,
 ) -> str:
     sidebar_html = render_episode_sidebar(posts, current_url=current_url, url_prefix="../")
+    header_html = render_site_header("../index.html", "../government-class-quiz.html")
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -388,11 +688,7 @@ def render_post_html(
   <link rel="stylesheet" href="../assets/styles.css?v={ASSET_VERSION}" />
 </head>
 <body>
-  <header class="site-header">
-    <div class="site-header-inner">
-      <a class="brand" href="../index.html">TRASH TALES</a>
-    </div>
-  </header>
+  {header_html}
 
   <main class="container page-shell">
     {sidebar_html}
@@ -429,6 +725,7 @@ def render_post_card(post: dict, summary: str) -> str:
 def render_index_html(posts: List[dict]) -> str:
     cards_html = "".join(render_post_card(p, p["excerpt"]) for p in posts)
     sidebar_html = render_episode_sidebar(posts)
+    header_html = render_site_header("./index.html", "./government-class-quiz.html")
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -439,11 +736,7 @@ def render_index_html(posts: List[dict]) -> str:
   <link rel="stylesheet" href="./assets/styles.css?v={ASSET_VERSION}" />
 </head>
 <body>
-  <header class="site-header">
-    <div class="site-header-inner">
-      <a class="brand" href="./index.html">TRASH TALES</a>
-    </div>
-  </header>
+  {header_html}
 
   <main class="container page-shell">
     {sidebar_html}
@@ -473,6 +766,70 @@ def render_index_html(posts: List[dict]) -> str:
     </div>
   </main>
   <script src="./assets/app.js?v={ASSET_VERSION}" data-search-index="./assets/search-index.json?v={ASSET_VERSION}"></script>
+</body>
+</html>
+"""
+
+
+def render_quiz_html() -> str:
+    cards_json = json.dumps(FLASHCARDS, ensure_ascii=False)
+    deck_options = "".join(
+        f'<option value="{html.escape(deck)}">{html.escape(deck)}</option>'
+        for deck in sorted({card["deck"] for card in FLASHCARDS})
+    )
+    header_html = render_site_header("./index.html", "./government-class-quiz.html", active="quiz")
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Government Class Quiz | Trash Tales</title>
+  <meta name="description" content="Anki-style flashcards for San Francisco government class notes." />
+  <link rel="stylesheet" href="./assets/styles.css?v={ASSET_VERSION}" />
+</head>
+<body>
+  {header_html}
+
+  <main class="container quiz-container">
+    <section class="hero quiz-hero">
+      <h1>Government Class Quiz</h1>
+      <p>Anki-style flashcards pulled from the class quiz reports. Flip each card, mark how it felt, and shuffle when you want a fresh order.</p>
+    </section>
+
+    <section class="quiz-controls" aria-label="Quiz controls">
+      <label class="search-label" for="deck-filter">Deck</label>
+      <select id="deck-filter" class="quiz-select">
+        <option value="all">All decks</option>
+        {deck_options}
+      </select>
+      <button id="shuffle-cards" class="quiz-secondary-button" type="button">Shuffle</button>
+      <p id="quiz-progress" class="search-help"></p>
+    </section>
+
+    <section class="flashcard-panel" aria-live="polite">
+      <p id="flashcard-deck" class="post-meta"></p>
+      <button id="flashcard" class="flashcard" type="button" aria-label="Flip flashcard">
+        <span id="flashcard-side" class="flashcard-side">Question</span>
+        <span id="flashcard-text" class="flashcard-text"></span>
+        <span class="flashcard-hint">Tap to flip</span>
+      </button>
+      <div class="quiz-actions">
+        <button id="again-card" class="quiz-button" type="button">Again</button>
+        <button id="good-card" class="quiz-button" type="button">Good</button>
+        <button id="easy-card" class="quiz-button" type="button">Easy</button>
+      </div>
+    </section>
+
+    <section class="quiz-list-wrap">
+      <h2>All Cards</h2>
+      <div id="quiz-card-list" class="quiz-card-list"></div>
+    </section>
+  </main>
+
+  <script>
+    window.GOVERNMENT_FLASHCARDS = {cards_json};
+  </script>
+  <script src="./assets/app.js?v={ASSET_VERSION}"></script>
 </body>
 </html>
 """
@@ -518,6 +875,8 @@ html, body {
   padding: 14px 20px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 .brand {
@@ -528,10 +887,23 @@ html, body {
   font-size: 0.9rem;
 }
 
-nav a {
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.site-nav-link {
   color: var(--muted);
   text-decoration: none;
   font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.site-nav-link:hover,
+.site-nav-link:focus-visible,
+.site-nav-link.active {
+  color: var(--text);
 }
 
 .container {
@@ -713,6 +1085,136 @@ nav a {
   margin: 8px 0 0;
   color: var(--muted);
   font-size: 0.95rem;
+}
+
+.quiz-container {
+  max-width: 860px;
+}
+
+.quiz-hero p {
+  max-width: 720px;
+}
+
+.quiz-controls {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px 12px;
+  align-items: end;
+  margin: 0 0 18px;
+}
+
+.quiz-controls .search-label,
+.quiz-controls .search-help {
+  grid-column: 1 / -1;
+}
+
+.quiz-select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+}
+
+.flashcard-panel {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px;
+  background: #fff;
+}
+
+.flashcard {
+  width: 100%;
+  min-height: 260px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 24px;
+  background: var(--bg);
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  display: grid;
+  align-content: center;
+  gap: 14px;
+}
+
+.flashcard-side {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.flashcard-text {
+  font-family: "Georgia", "Times New Roman", serif;
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  line-height: 1.35;
+}
+
+.flashcard-hint {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.quiz-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.quiz-button,
+.quiz-secondary-button {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 11px 14px;
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.quiz-button:hover,
+.quiz-button:focus-visible,
+.quiz-secondary-button:hover,
+.quiz-secondary-button:focus-visible {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.quiz-list-wrap {
+  margin-top: 28px;
+}
+
+.quiz-list-wrap h2 {
+  margin: 0 0 12px;
+  font-family: "Georgia", "Times New Roman", serif;
+}
+
+.quiz-card-list {
+  display: grid;
+  gap: 10px;
+}
+
+.quiz-card-summary {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px;
+  background: #fff;
+}
+
+.quiz-card-summary h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+.quiz-card-summary p {
+  margin: 0;
+  color: var(--muted);
 }
 
 .archive-grid {
@@ -898,6 +1400,17 @@ nav a {
 
   .tooltip {
     font-size: 0.86rem;
+  }
+
+  .site-header-inner {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .quiz-controls,
+  .quiz-actions {
+    grid-template-columns: 1fr;
   }
 }
 """
@@ -1089,6 +1602,106 @@ nav a {
 
   input.addEventListener("input", runSearch);
 })();
+
+(() => {
+  const allCards = window.GOVERNMENT_FLASHCARDS || [];
+  const cardButton = document.getElementById("flashcard");
+  const cardText = document.getElementById("flashcard-text");
+  const cardSide = document.getElementById("flashcard-side");
+  const cardDeck = document.getElementById("flashcard-deck");
+  const deckFilter = document.getElementById("deck-filter");
+  const progress = document.getElementById("quiz-progress");
+  const list = document.getElementById("quiz-card-list");
+  const shuffleButton = document.getElementById("shuffle-cards");
+  const reviewButtons = [
+    document.getElementById("again-card"),
+    document.getElementById("good-card"),
+    document.getElementById("easy-card"),
+  ];
+
+  if (!allCards.length || !cardButton || !cardText || !cardSide || !cardDeck || !deckFilter || !progress || !list) return;
+
+  let cards = [...allCards];
+  let index = 0;
+  let showingBack = false;
+
+  function escapeHtml(value) {
+    return value
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#39;");
+  }
+
+  function filteredCards() {
+    const selectedDeck = deckFilter.value;
+    if (selectedDeck === "all") return [...allCards];
+    return allCards.filter((card) => card.deck === selectedDeck);
+  }
+
+  function renderList() {
+    list.innerHTML = cards.map((card) => `
+      <article class="quiz-card-summary">
+        <p class="post-meta">${escapeHtml(card.deck)}</p>
+        <h3>${escapeHtml(card.front)}</h3>
+        <p>${escapeHtml(card.back)}</p>
+      </article>
+    `).join("");
+  }
+
+  function renderCard() {
+    if (!cards.length) {
+      cardDeck.textContent = "";
+      cardSide.textContent = "No cards";
+      cardText.textContent = "No cards match this deck.";
+      progress.textContent = "";
+      list.innerHTML = "";
+      return;
+    }
+
+    const card = cards[index];
+    cardDeck.textContent = card.deck;
+    cardSide.textContent = showingBack ? "Answer" : "Question";
+    cardText.textContent = showingBack ? card.back : card.front;
+    progress.textContent = `Card ${index + 1} of ${cards.length}`;
+    renderList();
+  }
+
+  function nextCard() {
+    if (!cards.length) return;
+    index = (index + 1) % cards.length;
+    showingBack = false;
+    renderCard();
+  }
+
+  function shuffleCards() {
+    for (let i = cards.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [cards[i], cards[j]] = [cards[j], cards[i]];
+    }
+    index = 0;
+    showingBack = false;
+    renderCard();
+  }
+
+  cardButton.addEventListener("click", () => {
+    showingBack = !showingBack;
+    renderCard();
+  });
+
+  deckFilter.addEventListener("change", () => {
+    cards = filteredCards();
+    index = 0;
+    showingBack = false;
+    renderCard();
+  });
+
+  shuffleButton?.addEventListener("click", shuffleCards);
+  reviewButtons.forEach((button) => button?.addEventListener("click", nextCard));
+
+  renderCard();
+})();
 """
     (ASSETS_DIR / "app.js").write_text(app_js, encoding="utf-8")
 
@@ -1187,6 +1800,7 @@ def build() -> None:
         encoding="utf-8",
     )
     (SITE_DIR / "index.html").write_text(render_index_html(index_posts), encoding="utf-8")
+    (SITE_DIR / "government-class-quiz.html").write_text(render_quiz_html(), encoding="utf-8")
 
     print(f"Built {len(index_posts)} posts into {SITE_DIR}")
     print(f"Loaded {len(character_defs)} character definitions.")

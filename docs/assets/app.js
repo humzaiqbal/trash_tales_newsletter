@@ -184,3 +184,103 @@
 
   input.addEventListener("input", runSearch);
 })();
+
+(() => {
+  const allCards = window.GOVERNMENT_FLASHCARDS || [];
+  const cardButton = document.getElementById("flashcard");
+  const cardText = document.getElementById("flashcard-text");
+  const cardSide = document.getElementById("flashcard-side");
+  const cardDeck = document.getElementById("flashcard-deck");
+  const deckFilter = document.getElementById("deck-filter");
+  const progress = document.getElementById("quiz-progress");
+  const list = document.getElementById("quiz-card-list");
+  const shuffleButton = document.getElementById("shuffle-cards");
+  const reviewButtons = [
+    document.getElementById("again-card"),
+    document.getElementById("good-card"),
+    document.getElementById("easy-card"),
+  ];
+
+  if (!allCards.length || !cardButton || !cardText || !cardSide || !cardDeck || !deckFilter || !progress || !list) return;
+
+  let cards = [...allCards];
+  let index = 0;
+  let showingBack = false;
+
+  function escapeHtml(value) {
+    return value
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#39;");
+  }
+
+  function filteredCards() {
+    const selectedDeck = deckFilter.value;
+    if (selectedDeck === "all") return [...allCards];
+    return allCards.filter((card) => card.deck === selectedDeck);
+  }
+
+  function renderList() {
+    list.innerHTML = cards.map((card) => `
+      <article class="quiz-card-summary">
+        <p class="post-meta">${escapeHtml(card.deck)}</p>
+        <h3>${escapeHtml(card.front)}</h3>
+        <p>${escapeHtml(card.back)}</p>
+      </article>
+    `).join("");
+  }
+
+  function renderCard() {
+    if (!cards.length) {
+      cardDeck.textContent = "";
+      cardSide.textContent = "No cards";
+      cardText.textContent = "No cards match this deck.";
+      progress.textContent = "";
+      list.innerHTML = "";
+      return;
+    }
+
+    const card = cards[index];
+    cardDeck.textContent = card.deck;
+    cardSide.textContent = showingBack ? "Answer" : "Question";
+    cardText.textContent = showingBack ? card.back : card.front;
+    progress.textContent = `Card ${index + 1} of ${cards.length}`;
+    renderList();
+  }
+
+  function nextCard() {
+    if (!cards.length) return;
+    index = (index + 1) % cards.length;
+    showingBack = false;
+    renderCard();
+  }
+
+  function shuffleCards() {
+    for (let i = cards.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [cards[i], cards[j]] = [cards[j], cards[i]];
+    }
+    index = 0;
+    showingBack = false;
+    renderCard();
+  }
+
+  cardButton.addEventListener("click", () => {
+    showingBack = !showingBack;
+    renderCard();
+  });
+
+  deckFilter.addEventListener("change", () => {
+    cards = filteredCards();
+    index = 0;
+    showingBack = false;
+    renderCard();
+  });
+
+  shuffleButton?.addEventListener("click", shuffleCards);
+  reviewButtons.forEach((button) => button?.addEventListener("click", nextCard));
+
+  renderCard();
+})();
