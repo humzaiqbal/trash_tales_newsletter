@@ -465,6 +465,352 @@ FLASHCARDS = [
 ]
 
 
+FLASHCARDS.extend(
+    [
+        {
+            "deck": "Class 1: SF Government Basics",
+            "front": "Which listed roles are not elected officials in San Francisco?",
+            "back": "Clerk of the Board, Superior Court Judge, Controller, City Administrator, Chief of Police, and County Clerk were not selected as elected officials in the quiz.",
+        },
+        {
+            "deck": "Class 1: SF Government Basics",
+            "front": "Is the Clerk of the Board one of the elected officials listed in the quiz?",
+            "back": "No. It appeared as a non-selected option.",
+        },
+        {
+            "deck": "Class 1: SF Government Basics",
+            "front": "Is the Controller one of the elected officials listed in the Class 1 elected-officials question?",
+            "back": "No. The Controller appeared as a non-selected option in that question.",
+        },
+        {
+            "deck": "Class 1: SF Government Basics",
+            "front": "Is the City Administrator one of the elected officials listed in the Class 1 elected-officials question?",
+            "back": "No. The City Administrator appeared as a non-selected option in that question.",
+        },
+        {
+            "deck": "Class 1: SF Government Basics",
+            "front": "Is the Chief of Police one of the elected officials listed in the Class 1 elected-officials question?",
+            "back": "No. The Chief of Police appeared as a non-selected option in that question.",
+        },
+        {
+            "deck": "Class 1: SF Government Basics",
+            "front": "In the executive branch template, what are commissions described as?",
+            "back": "Commissions are the approvers.",
+        },
+        {
+            "deck": "Class 1: SF Government Basics",
+            "front": "In the executive branch template, what are departments described as?",
+            "back": "Departments are the doers.",
+        },
+        {
+            "deck": "Class 1: SF Government Basics",
+            "front": "In the executive branch template, who appoints commissions?",
+            "back": "Elected officials appoint commissions.",
+        },
+        {
+            "deck": "Class 1: SF Government Basics",
+            "front": "In the executive branch template, who oversees departments?",
+            "back": "Commissions oversee departments.",
+        },
+        {
+            "deck": "Class 1: SF Government Basics",
+            "front": "What is the General Fund?",
+            "back": "The primary city budget category, funded mainly through taxes.",
+        },
+        {
+            "deck": "Class 1: SF Government Basics",
+            "front": "Is the General Plan one of the two broad city budget categories?",
+            "back": "No. The two broad budget categories are the General Fund and enterprise departments.",
+        },
+        {
+            "deck": "Class 1: SF Government Basics",
+            "front": "Are Civil Grand Jury and Citizens' Advisory Committee social/political entities or advisory entities in the quiz?",
+            "back": "They are advisory entities.",
+        },
+        {
+            "deck": "Class 1: SF Government Basics",
+            "front": "Are Democratic clubs and neighborhood associations official advisory entities in the quiz?",
+            "back": "No. They are social/political entities, not official advisory entities.",
+        },
+        {
+            "deck": "Class 1: SF Government Basics",
+            "front": "What does RHNA stand for in the housing context of these quizzes?",
+            "back": "Regional Housing Needs Allocation.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "Which elected official is San Francisco's chief executive?",
+            "back": "The Mayor.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "Which elected body is San Francisco's legislative body?",
+            "back": "The Board of Supervisors.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "Which elected entity oversees SFUSD?",
+            "back": "The Board of Education.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "Which elected entity oversees San Francisco's community college?",
+            "back": "The City College Board of Trustees.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "Which official serves as banker, tax collector, and investment manager for San Francisco?",
+            "back": "The Treasurer.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "Which official assesses taxable property and maintains property records including deeds?",
+            "back": "The Assessor-Recorder.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "Which official prosecutes crimes on behalf of the people of San Francisco?",
+            "back": "The District Attorney.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "Which official provides legal representation to people who cannot afford it?",
+            "back": "The Public Defender.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "Which office drafts legislation and represents the city in court?",
+            "back": "The City Attorney.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "Which official manages county jails and handles civil enforcement duties like warrants and eviction orders?",
+            "back": "The Sheriff.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "Is constitutional law issued by executive agencies?",
+            "back": "No. Administrative law is issued by executive agencies.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "Is statutory law created by judicial opinion?",
+            "back": "No. Case law is created by judicial opinion. Statutory law is created by legislative bodies.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "Is administrative law often called a rule or regulation?",
+            "back": "Yes. Administrative law is often called a rule or regulation.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "Which type of law is detailed implementation of existing statutory law?",
+            "back": "Administrative law.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "Which type of law interprets the meaning and proper application of other types of law?",
+            "back": "Case law.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "Which type of law is often called statute at the state and federal levels?",
+            "back": "Statutory law.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "What type of law are commission regulations?",
+            "back": "Administrative law.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "What type of law is the San Francisco Charter?",
+            "back": "Statutory law.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "What type of law is the Administrative Code?",
+            "back": "Statutory law.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "What type of law are Municipal Codes?",
+            "back": "Statutory law.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "What type of law are Mayoral Executive Directives?",
+            "back": "Administrative law.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "What type of law is the Police Code?",
+            "back": "Statutory law.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "What type of law are department regulations?",
+            "back": "Administrative law.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "Can a proposed ordinance heard by legislative committee receive public comment?",
+            "back": "Yes.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "Can a proposed ordinance heard by legislative committee receive expert testimony?",
+            "back": "Yes.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "Can a proposed ordinance heard by legislative committee be amended?",
+            "back": "Yes. The committee can propose and adopt amendments.",
+        },
+        {
+            "deck": "Class 2: Law and Legislation",
+            "front": "Can a proposed ordinance heard by legislative committee get a recommendation vote?",
+            "back": "Yes. The committee can vote to make a recommendation.",
+        },
+        {
+            "deck": "Class 3: Ballot Measures and Charter",
+            "front": "In the Class 3 quiz, what name completes the fourth type of law: constitutional, statutory, administrative, and ____?",
+            "back": "Case law.",
+        },
+        {
+            "deck": "Class 3: Ballot Measures and Charter",
+            "front": "What is Step 1 of San Francisco's legislative process?",
+            "back": "Write legislation.",
+        },
+        {
+            "deck": "Class 3: Ballot Measures and Charter",
+            "front": "What is Step 2 of San Francisco's legislative process?",
+            "back": "Introduce legislation.",
+        },
+        {
+            "deck": "Class 3: Ballot Measures and Charter",
+            "front": "What is Step 3 of San Francisco's legislative process?",
+            "back": "Legislative committee hearing.",
+        },
+        {
+            "deck": "Class 3: Ballot Measures and Charter",
+            "front": "What is Step 4 of San Francisco's legislative process?",
+            "back": "Legislative committee recommendation.",
+        },
+        {
+            "deck": "Class 3: Ballot Measures and Charter",
+            "front": "What is Step 5 of San Francisco's legislative process?",
+            "back": "Full Board vote.",
+        },
+        {
+            "deck": "Class 3: Ballot Measures and Charter",
+            "front": "What is Step 6 of San Francisco's legislative process?",
+            "back": "Mayoral action.",
+        },
+        {
+            "deck": "Class 3: Ballot Measures and Charter",
+            "front": "Can citizens directly cause legislation to be written in the normal legislative process question?",
+            "back": "No. The selected answers were commissions, Supervisors, the Mayor, and departments.",
+        },
+        {
+            "deck": "Class 3: Ballot Measures and Charter",
+            "front": "Can Citizens' Advisory Committees cause legislation to be written in the normal legislative process question?",
+            "back": "No. They were not selected in the quiz.",
+        },
+        {
+            "deck": "Class 3: Ballot Measures and Charter",
+            "front": "Are motions ballot measures in the Class 3 quiz?",
+            "back": "No. Motions were not selected as ballot-measure types.",
+        },
+        {
+            "deck": "Class 3: Ballot Measures and Charter",
+            "front": "Are court opinions ballot measures in the Class 3 quiz?",
+            "back": "No. Court opinions were not selected as ballot-measure types.",
+        },
+        {
+            "deck": "Class 3: Ballot Measures and Charter",
+            "front": "Are mayoral executive directives ballot measures in the Class 3 quiz?",
+            "back": "No. Mayoral executive directives were not selected as ballot-measure types.",
+        },
+        {
+            "deck": "Class 3: Ballot Measures and Charter",
+            "front": "Are commissioner appointments ballot measures in the Class 3 quiz?",
+            "back": "No. Commissioner appointments were not selected as ballot-measure types.",
+        },
+        {
+            "deck": "Class 3: Ballot Measures and Charter",
+            "front": "Which listed officials were not recallable in the Class 3 quiz?",
+            "back": "Chief of Police, Director of Planning, Police Commissioner, and County Clerk were not selected as recallable officials.",
+        },
+        {
+            "deck": "Class 3: Ballot Measures and Charter",
+            "front": "Can the people change the San Francisco Charter?",
+            "back": "Yes. The people have authority to change the Charter.",
+        },
+        {
+            "deck": "Class 3: Ballot Measures and Charter",
+            "front": "Can the Board of Supervisors, Mayor, Rules Committee, or City Attorney independently change the Charter in the quiz?",
+            "back": "No. The quiz selected the people as having authority to change the Charter.",
+        },
+        {
+            "deck": "Class 4: Planning and Housing",
+            "front": "What does the Housing Element do?",
+            "back": "It describes actions the city will take to meet its RHNA target.",
+        },
+        {
+            "deck": "Class 4: Planning and Housing",
+            "front": "What is the Planning Code?",
+            "back": "The local statutory law that implements the General Plan roadmap.",
+        },
+        {
+            "deck": "Class 4: Planning and Housing",
+            "front": "Who does not draft the Housing Element, according to the Class 4 options?",
+            "back": "HCD, the Board of Supervisors, the Planning Commission, and ABAG were not the correct answers. The SF Planning Department drafts it.",
+        },
+        {
+            "deck": "Class 4: Planning and Housing",
+            "front": "Who does not set the Regional Housing Needs Distribution (RHND), according to the Class 4 options?",
+            "back": "The SF Board of Supervisors, ABAG, SF Planning Commission, and SF Planning Department were not the correct answers. HCD sets RHND.",
+        },
+        {
+            "deck": "Class 4: Planning and Housing",
+            "front": "Who does not enforce the Planning Code, according to the Class 4 options?",
+            "back": "ABAG, the Planning Commission, the Board of Supervisors, and HCD were not the correct answers. The SF Planning Department enforces it.",
+        },
+        {
+            "deck": "Class 4: Planning and Housing",
+            "front": "Who does not process legislative referrals for consistency with the General Plan and Planning Code priority policies?",
+            "back": "The Planning Commission, HCD, ABAG, and Board of Supervisors were not the correct answers. The SF Planning Department processes them.",
+        },
+        {
+            "deck": "Class 4: Planning and Housing",
+            "front": "What is discretionary review not the answer to in the Class 4 quiz?",
+            "back": "It is not the Planning Commission action for allowing a project on a parcel not zoned for that use without changing statutory law; the correct answer is Conditional Use Authorization.",
+        },
+        {
+            "deck": "Class 4: Planning and Housing",
+            "front": "What is zoning variance not the answer to in the Class 4 quiz?",
+            "back": "It is not the answer for allowing a project on a parcel not zoned for that use without changing statutory law; the correct answer is Conditional Use Authorization.",
+        },
+        {
+            "deck": "Class 4: Planning and Housing",
+            "front": "What is a Planning Code Amendment not the answer to in the Class 4 quiz?",
+            "back": "It is not the action that allows a project without changing statutory law. A Planning Code Amendment changes the statutory law; the quiz answer was Conditional Use Authorization.",
+        },
+        {
+            "deck": "Class 4: Planning and Housing",
+            "front": "Which courts were not the answer for a San Francisco speeding ticket?",
+            "back": "US Supreme Court, Northern California District Court, Ninth Circuit Court of Appeals, CA Supreme Court, and First District Court of Appeals were not correct. The answer was SF Superior Court.",
+        },
+        {
+            "deck": "Class 4: Planning and Housing",
+            "front": "What is the Class 4 timeline order from 1849 through 1996?",
+            "back": "1849 CA Constitution; 1850 first State Legislature creates SF County and SF City; 1856 Consolidation Act; 1879 second CA Constitution; 1898 SF Charter; 1917 Planning Commission; 1921 Planning Code; 1932 second SF Charter; 1942 Planning Department; 1945 first General Plan; 1960 second Planning Code; 1996 third SF Charter.",
+        },
+    ]
+)
+
+
 def canonical_alias(alias: str) -> str:
     return alias.strip().strip('"').strip("“").strip("”").strip()
 
