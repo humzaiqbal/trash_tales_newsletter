@@ -469,28 +469,28 @@ FLASHCARDS.extend(
     [
         {
             "deck": "Class 1: SF Government Basics",
-            "front": "Which listed roles are not elected officials in San Francisco?",
-            "back": "Clerk of the Board, Superior Court Judge, Controller, City Administrator, Chief of Police, and County Clerk were not selected as elected officials in the quiz.",
+            "front": "Which San Francisco government roles are not elected offices?",
+            "back": "Clerk of the Board, Superior Court Judge, Controller, City Administrator, Chief of Police, and County Clerk are not elected offices in this civic structure.",
         },
         {
             "deck": "Class 1: SF Government Basics",
-            "front": "Is the Clerk of the Board one of the elected officials listed in the quiz?",
-            "back": "No. It appeared as a non-selected option.",
+            "front": "Is the Clerk of the Board an elected official in San Francisco?",
+            "back": "No.",
         },
         {
             "deck": "Class 1: SF Government Basics",
-            "front": "Is the Controller one of the elected officials listed in the Class 1 elected-officials question?",
-            "back": "No. The Controller appeared as a non-selected option in that question.",
+            "front": "Is the Controller an elected official in San Francisco?",
+            "back": "No.",
         },
         {
             "deck": "Class 1: SF Government Basics",
-            "front": "Is the City Administrator one of the elected officials listed in the Class 1 elected-officials question?",
-            "back": "No. The City Administrator appeared as a non-selected option in that question.",
+            "front": "Is the City Administrator an elected official in San Francisco?",
+            "back": "No.",
         },
         {
             "deck": "Class 1: SF Government Basics",
-            "front": "Is the Chief of Police one of the elected officials listed in the Class 1 elected-officials question?",
-            "back": "No. The Chief of Police appeared as a non-selected option in that question.",
+            "front": "Is the Chief of Police an elected official in San Francisco?",
+            "back": "No.",
         },
         {
             "deck": "Class 1: SF Government Basics",
@@ -524,12 +524,12 @@ FLASHCARDS.extend(
         },
         {
             "deck": "Class 1: SF Government Basics",
-            "front": "Are Civil Grand Jury and Citizens' Advisory Committee social/political entities or advisory entities in the quiz?",
+            "front": "Are the Civil Grand Jury and Citizens' Advisory Committees social/political entities or advisory entities?",
             "back": "They are advisory entities.",
         },
         {
             "deck": "Class 1: SF Government Basics",
-            "front": "Are Democratic clubs and neighborhood associations official advisory entities in the quiz?",
+            "front": "Are Democratic clubs and neighborhood associations official advisory entities?",
             "back": "No. They are social/political entities, not official advisory entities.",
         },
         {
@@ -674,7 +674,7 @@ FLASHCARDS.extend(
         },
         {
             "deck": "Class 3: Ballot Measures and Charter",
-            "front": "In the Class 3 quiz, what name completes the fourth type of law: constitutional, statutory, administrative, and ____?",
+            "front": "What name completes the four-type law framework: constitutional, statutory, administrative, and ____?",
             "back": "Case law.",
         },
         {
@@ -709,38 +709,38 @@ FLASHCARDS.extend(
         },
         {
             "deck": "Class 3: Ballot Measures and Charter",
-            "front": "Can citizens directly cause legislation to be written in the normal legislative process question?",
+            "front": "Can citizens directly cause legislation to be written in San Francisco's normal legislative process?",
             "back": "No. The selected answers were commissions, Supervisors, the Mayor, and departments.",
         },
         {
             "deck": "Class 3: Ballot Measures and Charter",
-            "front": "Can Citizens' Advisory Committees cause legislation to be written in the normal legislative process question?",
-            "back": "No. They were not selected in the quiz.",
+            "front": "Can Citizens' Advisory Committees directly cause legislation to be written in San Francisco's normal legislative process?",
+            "back": "No. Legislation can be caused by commissions, Supervisors, the Mayor, and departments.",
         },
         {
             "deck": "Class 3: Ballot Measures and Charter",
-            "front": "Are motions ballot measures in the Class 3 quiz?",
-            "back": "No. Motions were not selected as ballot-measure types.",
+            "front": "Are motions ballot measures?",
+            "back": "No. Motions are procedural acts, not ballot-measure types.",
         },
         {
             "deck": "Class 3: Ballot Measures and Charter",
-            "front": "Are court opinions ballot measures in the Class 3 quiz?",
-            "back": "No. Court opinions were not selected as ballot-measure types.",
+            "front": "Are court opinions ballot measures?",
+            "back": "No. Court opinions are case law, not ballot measures.",
         },
         {
             "deck": "Class 3: Ballot Measures and Charter",
-            "front": "Are mayoral executive directives ballot measures in the Class 3 quiz?",
-            "back": "No. Mayoral executive directives were not selected as ballot-measure types.",
+            "front": "Are mayoral executive directives ballot measures?",
+            "back": "No. Mayoral executive directives are administrative actions, not ballot measures.",
         },
         {
             "deck": "Class 3: Ballot Measures and Charter",
-            "front": "Are commissioner appointments ballot measures in the Class 3 quiz?",
-            "back": "No. Commissioner appointments were not selected as ballot-measure types.",
+            "front": "Are commissioner appointments ballot measures?",
+            "back": "No. Commissioner appointments are appointment actions, not ballot measures.",
         },
         {
             "deck": "Class 3: Ballot Measures and Charter",
-            "front": "Which listed officials were not recallable in the Class 3 quiz?",
-            "back": "Chief of Police, Director of Planning, Police Commissioner, and County Clerk were not selected as recallable officials.",
+            "front": "Which San Francisco roles are not recallable officials?",
+            "back": "Chief of Police, Director of Planning, Police Commissioner, and County Clerk are not recallable officials in this framework.",
         },
         {
             "deck": "Class 3: Ballot Measures and Charter",
@@ -749,8 +749,8 @@ FLASHCARDS.extend(
         },
         {
             "deck": "Class 3: Ballot Measures and Charter",
-            "front": "Can the Board of Supervisors, Mayor, Rules Committee, or City Attorney independently change the Charter in the quiz?",
-            "back": "No. The quiz selected the people as having authority to change the Charter.",
+            "front": "Can the Board of Supervisors, Mayor, Rules Committee, or City Attorney independently change the San Francisco Charter?",
+            "back": "No. Charter changes ultimately require the people.",
         },
         {
             "deck": "Class 4: Planning and Housing",
@@ -764,43 +764,43 @@ FLASHCARDS.extend(
         },
         {
             "deck": "Class 4: Planning and Housing",
-            "front": "Who does not draft the Housing Element, according to the Class 4 options?",
-            "back": "HCD, the Board of Supervisors, the Planning Commission, and ABAG were not the correct answers. The SF Planning Department drafts it.",
+            "front": "What does the SF Planning Department do in the Housing Element process?",
+            "back": "The SF Planning Department drafts the Housing Element.",
         },
         {
             "deck": "Class 4: Planning and Housing",
-            "front": "Who does not set the Regional Housing Needs Distribution (RHND), according to the Class 4 options?",
-            "back": "The SF Board of Supervisors, ABAG, SF Planning Commission, and SF Planning Department were not the correct answers. HCD sets RHND.",
+            "front": "What does HCD do in the Regional Housing Needs Distribution process?",
+            "back": "The California Department of Housing and Community Development sets the RHND.",
         },
         {
             "deck": "Class 4: Planning and Housing",
-            "front": "Who does not enforce the Planning Code, according to the Class 4 options?",
-            "back": "ABAG, the Planning Commission, the Board of Supervisors, and HCD were not the correct answers. The SF Planning Department enforces it.",
+            "front": "What does the SF Planning Department do with the Planning Code?",
+            "back": "The SF Planning Department enforces the Planning Code.",
         },
         {
             "deck": "Class 4: Planning and Housing",
-            "front": "Who does not process legislative referrals for consistency with the General Plan and Planning Code priority policies?",
-            "back": "The Planning Commission, HCD, ABAG, and Board of Supervisors were not the correct answers. The SF Planning Department processes them.",
+            "front": "Which entity processes legislative referrals for consistency with the General Plan and Planning Code priority policies?",
+            "back": "The SF Planning Department.",
         },
         {
             "deck": "Class 4: Planning and Housing",
-            "front": "What is discretionary review not the answer to in the Class 4 quiz?",
-            "back": "It is not the Planning Commission action for allowing a project on a parcel not zoned for that use without changing statutory law; the correct answer is Conditional Use Authorization.",
+            "front": "Which Planning Commission action can allow a project on a parcel not zoned for that use without changing statutory law?",
+            "back": "Conditional Use Authorization.",
         },
         {
             "deck": "Class 4: Planning and Housing",
-            "front": "What is zoning variance not the answer to in the Class 4 quiz?",
-            "back": "It is not the answer for allowing a project on a parcel not zoned for that use without changing statutory law; the correct answer is Conditional Use Authorization.",
+            "front": "What does a zoning variance generally address?",
+            "back": "A zoning variance addresses relief from specific zoning requirements, but the quiz concept to remember is that Conditional Use Authorization allows certain uses without changing statutory law.",
         },
         {
             "deck": "Class 4: Planning and Housing",
-            "front": "What is a Planning Code Amendment not the answer to in the Class 4 quiz?",
-            "back": "It is not the action that allows a project without changing statutory law. A Planning Code Amendment changes the statutory law; the quiz answer was Conditional Use Authorization.",
+            "front": "What does a Planning Code Amendment do?",
+            "back": "A Planning Code Amendment changes the statutory law.",
         },
         {
             "deck": "Class 4: Planning and Housing",
-            "front": "Which courts were not the answer for a San Francisco speeding ticket?",
-            "back": "US Supreme Court, Northern California District Court, Ninth Circuit Court of Appeals, CA Supreme Court, and First District Court of Appeals were not correct. The answer was SF Superior Court.",
+            "front": "Which court handles a local San Francisco speeding ticket?",
+            "back": "San Francisco Superior Court.",
         },
         {
             "deck": "Class 4: Planning and Housing",
