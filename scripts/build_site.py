@@ -8,9 +8,15 @@ import os
 import re
 import shutil
 import zipfile
+from io import BytesIO
 from pathlib import Path
 from typing import Dict, List, Tuple
 from xml.etree import ElementTree as ET
+
+try:
+    from PIL import Image
+except ImportError:  # pragma: no cover - local builds can still fall back to raw DOCX images.
+    Image = None
 
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
@@ -21,6 +27,8 @@ ASSETS_DIR = SITE_DIR / "assets"
 IMAGES_DIR = ASSETS_DIR / "images"
 CHARACTER_LIST_FILE = SOURCE_DIR / "Character List.docx"
 ASSET_VERSION = "20260508a"
+IMAGE_MAX_WIDTH = 1600
+IMAGE_WEBP_QUALITY = 84
 
 QUOTED_NICKNAMES = re.compile(r"[\"“”]([^\"“”]+)[\"“”]")
 EPISODE_NUMBER = re.compile(r"episode_(\d+)", re.IGNORECASE)
@@ -873,6 +881,42 @@ def render_inline_html(
     return "".join(rendered)
 
 
+def write_optimized_image(raw_image: bytes, output_dir: Path, image_count: int, original_target: str) -> str:
+    original_ext = Path(original_target).suffix.lower() or ".png"
+    fallback_name = f"img-{image_count:03d}{original_ext}"
+
+    if Image is None:
+        (output_dir / fallback_name).write_bytes(raw_image)
+        return fallback_name
+
+    try:
+        with Image.open(BytesIO(raw_image)) as image:
+            image.load()
+            if getattr(image, "is_animated", False):
+                (output_dir / fallback_name).write_bytes(raw_image)
+                return fallback_name
+
+            if image.width > IMAGE_MAX_WIDTH:
+                height = round(image.height * (IMAGE_MAX_WIDTH / image.width))
+                image = image.resize((IMAGE_MAX_WIDTH, height), Image.Resampling.LANCZOS)
+
+            has_alpha = image.mode in {"RGBA", "LA"} or (
+                image.mode == "P" and "transparency" in image.info
+            )
+            image = image.convert("RGBA" if has_alpha else "RGB")
+            optimized_name = f"img-{image_count:03d}.webp"
+            image.save(
+                output_dir / optimized_name,
+                "WEBP",
+                quality=IMAGE_WEBP_QUALITY,
+                method=6,
+            )
+            return optimized_name
+    except Exception:
+        (output_dir / fallback_name).write_bytes(raw_image)
+        return fallback_name
+
+
 def read_docx_blocks(
     docx_path: Path,
     image_output_dir: Path | None = None,
@@ -910,10 +954,12 @@ def read_docx_blocks(
                     if internal_path not in zf.namelist():
                         continue
                     image_count += 1
-                    ext = Path(target).suffix.lower() or ".png"
-                    filename = f"img-{image_count:03d}{ext}"
-                    out_path = image_output_dir / filename
-                    out_path.write_bytes(zf.read(internal_path))
+                    filename = write_optimized_image(
+                        zf.read(internal_path),
+                        image_output_dir,
+                        image_count,
+                        target,
+                    )
                     para_images.append(f"{image_url_prefix}/{filename}")
 
             text = "".join(text_parts).strip()
