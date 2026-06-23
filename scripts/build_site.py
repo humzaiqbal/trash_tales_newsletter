@@ -96,6 +96,10 @@ INLINE_LINKS = [
         "a Yelp Review",
         "https://www.yelp.com/biz/kowloon-tong-dessert-cafe-san-francisco?hrid=oyF7m2y0KoziaZhPGojM6A&utm_campaign=www_review_share_popup&utm_medium=copy_link&utm_source=(direct)",
     ),
+    (
+        "episode 45",
+        "https://trashtalesnewsletter.github.io/trash_tales_newsletter/posts/episode-45.html",
+    ),
 ]
 
 
@@ -877,6 +881,8 @@ def render_inline_html(
             f'<a href="{html.escape(earliest_url)}" target="_blank" rel="noreferrer">{html.escape(earliest_phrase)}</a>'
         )
         remaining = remaining[earliest_match.end():]
+        if remaining.startswith("  "):
+            remaining = " " + remaining.lstrip()
 
     return "".join(rendered)
 
