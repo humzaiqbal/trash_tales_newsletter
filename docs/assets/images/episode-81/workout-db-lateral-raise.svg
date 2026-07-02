@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" role="img" aria-labelledby="title desc">
+  <title>DB Lateral Raise progress</title>
+  <desc>max logged weight over time from Apr 9 to Jun 25.</desc>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="72" y="24" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#1f2328">DB Lateral Raise</text>
+  <text x="72" y="44" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e">max logged weight</text>
+  <line x1="72" y1="302" x2="732" y2="302" stroke="#d7dde4"/>
+  <line x1="72" y1="38" x2="72" y2="302" stroke="#d7dde4"/>
+  <line x1="72" y1="170.0" x2="732" y2="170.0" stroke="#eef1f5"/>
+  <text x="62" y="306.0" text-anchor="end">-36.6</text>
+<text x="62" y="174.0" text-anchor="end">191.25</text>
+<text x="62" y="42.0" text-anchor="end">419.1</text>
+  <polyline points="72.0,136.0 106.7,94.0 141.5,154.8 176.2,107.0 210.9,128.7 245.7,107.0 280.4,276.5 315.2,150.4 349.9,115.7 384.6,63.5 419.4,176.5 454.1,276.5 488.8,128.7 523.6,167.8 558.3,276.5 593.1,276.5 627.8,163.5 662.5,276.5 697.3,136.0 732.0,276.5" fill="none" stroke="#0b57d0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#0b57d0"><circle cx="72.0" cy="136.0" r="4.5"><title>Apr 9: 250</title></circle>
+<circle cx="106.7" cy="94.0" r="4.5"><title>Apr 16: 322.5</title></circle>
+<circle cx="141.5" cy="154.8" r="4.5"><title>Apr 21: 217.5</title></circle>
+<circle cx="176.2" cy="107.0" r="4.5"><title>Apr 23: 300</title></circle>
+<circle cx="210.9" cy="128.7" r="4.5"><title>Apr 28: 262.5</title></circle>
+<circle cx="245.7" cy="107.0" r="4.5"><title>Apr 30: 300</title></circle>
+<circle cx="280.4" cy="276.5" r="4.5"><title>May 5: 7.5</title></circle>
+<circle cx="315.2" cy="150.4" r="4.5"><title>May 7: 225</title></circle>
+<circle cx="349.9" cy="115.7" r="4.5"><title>May 12: 285</title></circle>
+<circle cx="384.6" cy="63.5" r="4.5"><title>May 19: 375</title></circle>
+<circle cx="419.4" cy="176.5" r="4.5"><title>May 21: 180</title></circle>
+<circle cx="454.1" cy="276.5" r="4.5"><title>May 26: 7.5</title></circle>
+<circle cx="488.8" cy="128.7" r="4.5"><title>May 28: 262.5</title></circle>
+<circle cx="523.6" cy="167.8" r="4.5"><title>Jun 2: 195</title></circle>
+<circle cx="558.3" cy="276.5" r="4.5"><title>Jun 4: 7.5</title></circle>
+<circle cx="593.1" cy="276.5" r="4.5"><title>Jun 9: 7.5</title></circle>
+<circle cx="627.8" cy="163.5" r="4.5"><title>Jun 11: 202.5</title></circle>
+<circle cx="662.5" cy="276.5" r="4.5"><title>Jun 18: 7.5</title></circle>
+<circle cx="697.3" cy="136.0" r="4.5"><title>Jun 23: 250</title></circle>
+<circle cx="732.0" cy="276.5" r="4.5"><title>Jun 25: 7.5</title></circle></g>
+  <text x="72" y="336" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e" text-anchor="start">Apr 9</text>
+  <text x="732" y="336" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e" text-anchor="end">Jun 25</text>
+</svg>

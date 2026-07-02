@@ -458,6 +458,38 @@ html, body {
   background: #fff;
 }
 
+.workout-progress {
+  margin-top: 2.2em;
+}
+
+.workout-chart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.workout-chart-card {
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  background: #fff;
+}
+
+.workout-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.workout-chart-card figcaption {
+  margin-top: 8px;
+  color: var(--muted);
+  font-family: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 0.9rem;
+}
+
 .post-footer {
   margin-top: 28px;
   padding-top: 10px;

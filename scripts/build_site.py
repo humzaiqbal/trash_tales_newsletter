@@ -26,9 +26,17 @@ POSTS_DIR = SITE_DIR / "posts"
 ASSETS_DIR = SITE_DIR / "assets"
 IMAGES_DIR = ASSETS_DIR / "images"
 CHARACTER_LIST_FILE = SOURCE_DIR / "Character List.docx"
+WORKOUT_LOG_FILE = SOURCE_DIR / "Trash Tales - Workout Log.xlsx"
 ASSET_VERSION = "20260508a"
 IMAGE_MAX_WIDTH = 1600
 IMAGE_WEBP_QUALITY = 84
+WORKOUT_PROGRESS_EPISODE = "81"
+WORKOUT_PROGRESS_DATES = {dt.date(2026, 6, 23), dt.date(2026, 6, 25)}
+WORKOUT_XLSX_NS = {
+    "main": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
+    "office": "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
+    "rel": "http://schemas.openxmlformats.org/package/2006/relationships",
+}
 
 QUOTED_NICKNAMES = re.compile(r"[\"“”]([^\"“”]+)[\"“”]")
 EPISODE_NUMBER = re.compile(r"episode_(\d+)", re.IGNORECASE)
@@ -1786,6 +1794,38 @@ html, body {
   background: #fff;
 }
 
+.workout-progress {
+  margin-top: 2.2em;
+}
+
+.workout-chart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.workout-chart-card {
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  background: #fff;
+}
+
+.workout-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.workout-chart-card figcaption {
+  margin-top: 8px;
+  color: var(--muted);
+  font-family: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 0.9rem;
+}
+
 .post-footer {
   margin-top: 28px;
   padding-top: 10px;
@@ -2203,6 +2243,243 @@ def excerpt_from_lines(lines: List[str], max_len: int = 260) -> str:
     return joined[: max_len - 1].rstrip() + "…"
 
 
+def xlsx_column_index(cell_ref: str) -> int:
+    match = re.match(r"([A-Z]+)", cell_ref)
+    if not match:
+        return -1
+    index = 0
+    for char in match.group(1):
+        index = index * 26 + ord(char) - ord("A") + 1
+    return index
+
+
+def excel_serial_to_date(value: object) -> dt.date | None:
+    try:
+        return (dt.datetime(1899, 12, 30) + dt.timedelta(days=float(value))).date()
+    except (TypeError, ValueError):
+        return None
+
+
+def read_xlsx_shared_strings(zf: zipfile.ZipFile) -> List[str]:
+    if "xl/sharedStrings.xml" not in zf.namelist():
+        return []
+    root = ET.fromstring(zf.read("xl/sharedStrings.xml"))
+    strings = []
+    for item in root.findall("main:si", WORKOUT_XLSX_NS):
+        strings.append("".join(t.text or "" for t in item.findall(".//main:t", WORKOUT_XLSX_NS)))
+    return strings
+
+
+def read_xlsx_cell_value(cell: ET.Element, shared_strings: List[str]) -> str:
+    cell_type = cell.attrib.get("t")
+    value = cell.find("main:v", WORKOUT_XLSX_NS)
+    if cell_type == "s" and value is not None:
+        return shared_strings[int(value.text or "0")]
+    if cell_type == "inlineStr":
+        inline = cell.find("main:is", WORKOUT_XLSX_NS)
+        if inline is not None:
+            return "".join(t.text or "" for t in inline.findall(".//main:t", WORKOUT_XLSX_NS))
+    return value.text if value is not None and value.text is not None else ""
+
+
+def parse_numeric(value: object) -> float | None:
+    if value is None:
+        return None
+    text = str(value).strip()
+    if not text or text in {"-", "BW"}:
+        return None
+    match = re.search(r"-?\d+(?:\.\d+)?", text)
+    if not match:
+        return None
+    return float(match.group(0))
+
+
+def workout_metric(sets: List[Tuple[str, str]]) -> Tuple[float | None, str]:
+    volume = 0.0
+    has_volume = False
+    reps_total = 0.0
+    weights = []
+    for reps, weight in sets:
+        reps_num = parse_numeric(reps)
+        weight_num = parse_numeric(weight)
+        if reps_num is not None:
+            reps_total += reps_num
+        if weight_num is not None:
+            weights.append(weight_num)
+        if reps_num is not None and weight_num is not None:
+            volume += reps_num * weight_num
+            has_volume = True
+
+    if has_volume:
+        return volume, "total volume"
+    if reps_total:
+        return reps_total, "total reps/time"
+    if weights:
+        return max(weights), "max logged weight"
+    return None, "logged work"
+
+
+def read_workout_rows(workout_path: Path) -> List[dict]:
+    if not workout_path.exists():
+        return []
+
+    with zipfile.ZipFile(workout_path) as zf:
+        shared_strings = read_xlsx_shared_strings(zf)
+        root = ET.fromstring(zf.read("xl/worksheets/sheet1.xml"))
+        current_date = None
+        rows = []
+        for row in root.findall(".//main:sheetData/main:row", WORKOUT_XLSX_NS):
+            values: Dict[int, str] = {}
+            for cell in row.findall("main:c", WORKOUT_XLSX_NS):
+                col = xlsx_column_index(cell.attrib.get("r", ""))
+                if col > 0:
+                    values[col] = read_xlsx_cell_value(cell, shared_strings)
+
+            if values.get(1):
+                current_date = excel_serial_to_date(values[1])
+            exercise = values.get(2, "").strip()
+            if not current_date or not exercise or exercise.lower() == "exercise":
+                continue
+
+            sets = []
+            for reps_col, weight_col in [(3, 4), (5, 6), (7, 8), (9, 10), (11, 12)]:
+                reps = values.get(reps_col, "").strip()
+                weight = values.get(weight_col, "").strip()
+                if reps or weight:
+                    sets.append((reps, weight))
+            metric, metric_label = workout_metric(sets)
+            if metric is None:
+                continue
+            rows.append(
+                {
+                    "date": current_date,
+                    "exercise": exercise,
+                    "metric": metric,
+                    "metric_label": metric_label,
+                }
+            )
+        return rows
+
+
+def slugify_chart_name(name: str) -> str:
+    slug = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
+    return slug or "exercise"
+
+
+def render_workout_svg(exercise: str, metric_label: str, points: List[Tuple[dt.date, float]]) -> str:
+    width = 760
+    height = 360
+    left = 72
+    right = width - 28
+    top = 38
+    bottom = height - 58
+    values = [value for _, value in points]
+    min_value = min(values)
+    max_value = max(values)
+    if min_value == max_value:
+        pad = max(1.0, max_value * 0.1)
+        min_value -= pad
+        max_value += pad
+    else:
+        pad = (max_value - min_value) * 0.12
+        min_value -= pad
+        max_value += pad
+
+    def x_for(index: int) -> float:
+        if len(points) == 1:
+            return (left + right) / 2
+        return left + ((right - left) * index / (len(points) - 1))
+
+    def y_for(value: float) -> float:
+        return bottom - ((value - min_value) * (bottom - top) / (max_value - min_value))
+
+    coordinates = [(x_for(i), y_for(value), date, value) for i, (date, value) in enumerate(points)]
+    path = " ".join(f"{x:.1f},{y:.1f}" for x, y, _, _ in coordinates)
+    circles = "\n".join(
+        f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4.5"><title>{date.strftime("%b %-d")}: {value:g}</title></circle>'
+        for x, y, date, value in coordinates
+    )
+    first_date = points[0][0].strftime("%b %-d")
+    last_date = points[-1][0].strftime("%b %-d")
+    y_ticks = [min_value, (min_value + max_value) / 2, max_value]
+    y_labels = "\n".join(
+        f'<text x="{left - 10}" y="{y_for(value) + 4:.1f}" text-anchor="end">{value:g}</text>'
+        for value in y_ticks
+    )
+
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc">
+  <title>{html.escape(exercise)} progress</title>
+  <desc>{html.escape(metric_label)} over time from {html.escape(first_date)} to {html.escape(last_date)}.</desc>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="{left}" y="24" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#1f2328">{html.escape(exercise)}</text>
+  <text x="{left}" y="44" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e">{html.escape(metric_label)}</text>
+  <line x1="{left}" y1="{bottom}" x2="{right}" y2="{bottom}" stroke="#d7dde4"/>
+  <line x1="{left}" y1="{top}" x2="{left}" y2="{bottom}" stroke="#d7dde4"/>
+  <line x1="{left}" y1="{y_for(y_ticks[1]):.1f}" x2="{right}" y2="{y_for(y_ticks[1]):.1f}" stroke="#eef1f5"/>
+  {y_labels}
+  <polyline points="{path}" fill="none" stroke="#0b57d0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#0b57d0">{circles}</g>
+  <text x="{left}" y="{height - 24}" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e" text-anchor="start">{html.escape(first_date)}</text>
+  <text x="{right}" y="{height - 24}" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e" text-anchor="end">{html.escape(last_date)}</text>
+</svg>
+"""
+
+
+def render_workout_progress_section(image_output_dir: Path, image_url_prefix: str) -> str:
+    rows = read_workout_rows(WORKOUT_LOG_FILE)
+    if not rows:
+        return ""
+
+    target_exercises = []
+    seen = set()
+    for row in rows:
+        exercise = row["exercise"]
+        if row["date"] in WORKOUT_PROGRESS_DATES and exercise not in seen:
+            target_exercises.append(exercise)
+            seen.add(exercise)
+
+    if not target_exercises:
+        return ""
+
+    chart_items = []
+    for exercise in target_exercises:
+        by_date: Dict[dt.date, float] = {}
+        metric_label = "logged work"
+        for row in rows:
+            if row["exercise"] != exercise:
+                continue
+            metric_label = row["metric_label"]
+            by_date[row["date"]] = max(by_date.get(row["date"], float("-inf")), row["metric"])
+        points = sorted(by_date.items())
+        if not points:
+            continue
+        filename = f"workout-{slugify_chart_name(exercise)}.svg"
+        (image_output_dir / filename).write_text(
+            render_workout_svg(exercise, metric_label, points),
+            encoding="utf-8",
+        )
+        chart_items.append(
+            f"""
+        <figure class="workout-chart-card">
+          <img class="workout-chart" src="{html.escape(image_url_prefix)}/{html.escape(filename)}" loading="lazy" alt="{html.escape(exercise)} progress chart" />
+          <figcaption>{html.escape(exercise)} — {html.escape(metric_label)}</figcaption>
+        </figure>"""
+        )
+
+    if not chart_items:
+        return ""
+
+    return f"""
+      <section class="workout-progress">
+        <h2>Personal training progress for the week</h2>
+        <p>Charts below show the logged progress over time for each exercise from the 6/23/2026 and 6/25/2026 workouts. For weighted exercises, the metric is total volume; for bodyweight, time, or weight-only entries, it uses the clearest logged quantity available.</p>
+        <div class="workout-chart-grid">
+          {"".join(chart_items)}
+        </div>
+      </section>
+"""
+
+
 def build() -> None:
     SITE_DIR.mkdir(parents=True, exist_ok=True)
     POSTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -2243,6 +2520,13 @@ def build() -> None:
         lines = [b["text"] for b in blocks if b.get("type") == "paragraph"]
         article_blocks = [block_to_html(b, variant_lookup, variant_pattern) for b in blocks]
         article_html = "\n        ".join([b for b in article_blocks if b])
+        if episode_label == WORKOUT_PROGRESS_EPISODE:
+            workout_html = render_workout_progress_section(
+                post_image_dir,
+                f"../assets/images/{post_slug}",
+            )
+            if workout_html:
+                article_html = f"{article_html}\n        {workout_html}"
 
         index_posts.append(
             {

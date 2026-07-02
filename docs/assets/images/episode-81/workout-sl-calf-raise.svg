@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" role="img" aria-labelledby="title desc">
+  <title>SL Calf Raise progress</title>
+  <desc>max logged weight over time from Apr 7 to Jun 23.</desc>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="72" y="24" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#1f2328">SL Calf Raise</text>
+  <text x="72" y="44" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e">max logged weight</text>
+  <line x1="72" y1="302" x2="732" y2="302" stroke="#d7dde4"/>
+  <line x1="72" y1="38" x2="72" y2="302" stroke="#d7dde4"/>
+  <line x1="72" y1="170.0" x2="732" y2="170.0" stroke="#eef1f5"/>
+  <text x="62" y="306.0" text-anchor="end">-85.6</text>
+<text x="62" y="174.0" text-anchor="end">460</text>
+<text x="62" y="42.0" text-anchor="end">1005.6</text>
+  <polyline points="72.0,275.0 132.0,274.0 192.0,272.6 252.0,271.9 312.0,271.1 372.0,172.4 432.0,141.9 492.0,118.0 552.0,90.8 612.0,63.5 672.0,63.5 732.0,276.5" fill="none" stroke="#0b57d0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#0b57d0"><circle cx="72.0" cy="275.0" r="4.5"><title>Apr 7: 26</title></circle>
+<circle cx="132.0" cy="274.0" r="4.5"><title>Apr 14: 30</title></circle>
+<circle cx="192.0" cy="272.6" r="4.5"><title>Apr 21: 36</title></circle>
+<circle cx="252.0" cy="271.9" r="4.5"><title>Apr 28: 39</title></circle>
+<circle cx="312.0" cy="271.1" r="4.5"><title>May 5: 42</title></circle>
+<circle cx="372.0" cy="172.4" r="4.5"><title>May 12: 450</title></circle>
+<circle cx="432.0" cy="141.9" r="4.5"><title>May 19: 576</title></circle>
+<circle cx="492.0" cy="118.0" r="4.5"><title>May 26: 675</title></circle>
+<circle cx="552.0" cy="90.8" r="4.5"><title>Jun 2: 787.5</title></circle>
+<circle cx="612.0" cy="63.5" r="4.5"><title>Jun 9: 900</title></circle>
+<circle cx="672.0" cy="63.5" r="4.5"><title>Jun 18: 900</title></circle>
+<circle cx="732.0" cy="276.5" r="4.5"><title>Jun 23: 20</title></circle></g>
+  <text x="72" y="336" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e" text-anchor="start">Apr 7</text>
+  <text x="732" y="336" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e" text-anchor="end">Jun 23</text>
+</svg>
