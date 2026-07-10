@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" role="img" aria-labelledby="title desc">
+  <title>Incline DB Curl progress</title>
+  <desc>average load per rep over time from Apr 2 to Jun 25.</desc>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="72" y="24" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#1f2328">Incline DB Curl</text>
+  <text x="72" y="44" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e">average load per rep</text>
+  <line x1="72" y1="302" x2="732" y2="302" stroke="#d7dde4"/>
+  <line x1="72" y1="38" x2="72" y2="302" stroke="#d7dde4"/>
+  <line x1="72" y1="170.0" x2="732" y2="170.0" stroke="#eef1f5"/>
+  <text x="62" y="306.0" text-anchor="end">8.8</text>
+<text x="62" y="174.0" text-anchor="end">15</text>
+<text x="62" y="42.0" text-anchor="end">21.2</text>
+  <polyline points="72.0,276.5 103.4,223.2 134.9,223.2 166.3,223.2 197.7,170.0 229.1,170.0 260.6,170.0 292.0,170.0 323.4,170.0 354.9,170.0 386.3,170.0 417.7,116.8 449.1,116.8 480.6,116.8 512.0,116.8 543.4,116.8 574.9,116.8 606.3,116.8 637.7,63.5 669.1,116.8 700.6,116.8 732.0,63.5" fill="none" stroke="#0b57d0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#0b57d0"><circle cx="72.0" cy="276.5" r="4.5"><title>Apr 2: 10</title></circle>
+<circle cx="103.4" cy="223.2" r="4.5"><title>Apr 7: 12.5</title></circle>
+<circle cx="134.9" cy="223.2" r="4.5"><title>Apr 9: 12.5</title></circle>
+<circle cx="166.3" cy="223.2" r="4.5"><title>Apr 16: 12.5</title></circle>
+<circle cx="197.7" cy="170.0" r="4.5"><title>Apr 21: 15</title></circle>
+<circle cx="229.1" cy="170.0" r="4.5"><title>Apr 23: 15</title></circle>
+<circle cx="260.6" cy="170.0" r="4.5"><title>Apr 28: 15</title></circle>
+<circle cx="292.0" cy="170.0" r="4.5"><title>Apr 30: 15</title></circle>
+<circle cx="323.4" cy="170.0" r="4.5"><title>May 5: 15</title></circle>
+<circle cx="354.9" cy="170.0" r="4.5"><title>May 7: 15</title></circle>
+<circle cx="386.3" cy="170.0" r="4.5"><title>May 12: 15</title></circle>
+<circle cx="417.7" cy="116.8" r="4.5"><title>May 19: 17.5</title></circle>
+<circle cx="449.1" cy="116.8" r="4.5"><title>May 21: 17.5</title></circle>
+<circle cx="480.6" cy="116.8" r="4.5"><title>May 26: 17.5</title></circle>
+<circle cx="512.0" cy="116.8" r="4.5"><title>May 28: 17.5</title></circle>
+<circle cx="543.4" cy="116.8" r="4.5"><title>Jun 2: 17.5</title></circle>
+<circle cx="574.9" cy="116.8" r="4.5"><title>Jun 4: 17.5</title></circle>
+<circle cx="606.3" cy="116.8" r="4.5"><title>Jun 9: 17.5</title></circle>
+<circle cx="637.7" cy="63.5" r="4.5"><title>Jun 11: 20</title></circle>
+<circle cx="669.1" cy="116.8" r="4.5"><title>Jun 18: 17.5</title></circle>
+<circle cx="700.6" cy="116.8" r="4.5"><title>Jun 23: 17.5</title></circle>
+<circle cx="732.0" cy="63.5" r="4.5"><title>Jun 25: 20</title></circle></g>
+  <text x="72" y="336" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e" text-anchor="start">Apr 2</text>
+  <text x="732" y="336" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e" text-anchor="end">Jun 25</text>
+</svg>

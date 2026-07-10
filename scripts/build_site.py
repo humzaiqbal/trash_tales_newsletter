@@ -27,11 +27,30 @@ ASSETS_DIR = SITE_DIR / "assets"
 IMAGES_DIR = ASSETS_DIR / "images"
 CHARACTER_LIST_FILE = SOURCE_DIR / "Character List.docx"
 WORKOUT_LOG_FILE = SOURCE_DIR / "Trash Tales - Workout Log.xlsx"
-ASSET_VERSION = "20260508a"
+ASSET_VERSION = "20260710a"
 IMAGE_MAX_WIDTH = 1600
 IMAGE_WEBP_QUALITY = 84
-WORKOUT_PROGRESS_EPISODE = "81"
-WORKOUT_PROGRESS_DATES = {dt.date(2026, 6, 23), dt.date(2026, 6, 25)}
+WORKOUT_PROGRESS_CONFIG = {
+    "81": {
+        "dates": {dt.date(2026, 6, 23), dt.date(2026, 6, 25)},
+        "metric": "volume",
+        "description": (
+            "Charts below show the logged progress over time for each exercise from the "
+            "6/23/2026 and 6/25/2026 workouts. For weighted exercises, the metric is total "
+            "volume; for bodyweight, time, or weight-only entries, it uses the clearest "
+            "logged quantity available."
+        ),
+    },
+    "82": {
+        "dates": {dt.date(2026, 6, 25)},
+        "metric": "average_load",
+        "description": (
+            "Charts below show progress over time for each exercise from the 6/25/2026 "
+            "workout. The metric is average load per rep across the logged sets, which "
+            "normalizes progress instead of adding all three sets into total volume."
+        ),
+    },
+}
 WORKOUT_XLSX_NS = {
     "main": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     "office": "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
@@ -2294,11 +2313,15 @@ def parse_numeric(value: object) -> float | None:
     return float(match.group(0))
 
 
-def workout_metric(sets: List[Tuple[str, str]]) -> Tuple[float | None, str]:
+def workout_metric(
+    sets: List[Tuple[str, str]],
+    metric_mode: str = "volume",
+) -> Tuple[float | None, str]:
     volume = 0.0
     has_volume = False
     reps_total = 0.0
     weights = []
+    weighted_reps = 0.0
     for reps, weight in sets:
         reps_num = parse_numeric(reps)
         weight_num = parse_numeric(weight)
@@ -2308,7 +2331,15 @@ def workout_metric(sets: List[Tuple[str, str]]) -> Tuple[float | None, str]:
             weights.append(weight_num)
         if reps_num is not None and weight_num is not None:
             volume += reps_num * weight_num
+            weighted_reps += reps_num
             has_volume = True
+
+    if metric_mode == "average_load":
+        if has_volume and weighted_reps:
+            return volume / weighted_reps, "average load per rep"
+        if weights:
+            return sum(weights) / len(weights), "average logged load"
+        return None, "average load per rep"
 
     if has_volume:
         return volume, "total volume"
@@ -2356,6 +2387,7 @@ def read_workout_rows(workout_path: Path) -> List[dict]:
                     "exercise": exercise,
                     "metric": metric,
                     "metric_label": metric_label,
+                    "sets": sets,
                 }
             )
         return rows
@@ -2425,7 +2457,15 @@ def render_workout_svg(exercise: str, metric_label: str, points: List[Tuple[dt.d
 """
 
 
-def render_workout_progress_section(image_output_dir: Path, image_url_prefix: str) -> str:
+def render_workout_progress_section(
+    episode_label: str,
+    image_output_dir: Path,
+    image_url_prefix: str,
+) -> str:
+    config = WORKOUT_PROGRESS_CONFIG.get(episode_label)
+    if not config:
+        return ""
+
     rows = read_workout_rows(WORKOUT_LOG_FILE)
     if not rows:
         return ""
@@ -2434,7 +2474,7 @@ def render_workout_progress_section(image_output_dir: Path, image_url_prefix: st
     seen = set()
     for row in rows:
         exercise = row["exercise"]
-        if row["date"] in WORKOUT_PROGRESS_DATES and exercise not in seen:
+        if row["date"] in config["dates"] and exercise not in seen:
             target_exercises.append(exercise)
             seen.add(exercise)
 
@@ -2442,14 +2482,18 @@ def render_workout_progress_section(image_output_dir: Path, image_url_prefix: st
         return ""
 
     chart_items = []
+    progress_cutoff = max(config["dates"])
     for exercise in target_exercises:
         by_date: Dict[dt.date, float] = {}
         metric_label = "logged work"
         for row in rows:
-            if row["exercise"] != exercise:
+            if row["exercise"] != exercise or row["date"] > progress_cutoff:
                 continue
-            metric_label = row["metric_label"]
-            by_date[row["date"]] = max(by_date.get(row["date"], float("-inf")), row["metric"])
+            metric, row_metric_label = workout_metric(row["sets"], config["metric"])
+            if metric is None:
+                continue
+            metric_label = row_metric_label
+            by_date[row["date"]] = max(by_date.get(row["date"], float("-inf")), metric)
         points = sorted(by_date.items())
         if not points:
             continue
@@ -2472,7 +2516,7 @@ def render_workout_progress_section(image_output_dir: Path, image_url_prefix: st
     return f"""
       <section class="workout-progress">
         <h2>Personal training progress for the week</h2>
-        <p>Charts below show the logged progress over time for each exercise from the 6/23/2026 and 6/25/2026 workouts. For weighted exercises, the metric is total volume; for bodyweight, time, or weight-only entries, it uses the clearest logged quantity available.</p>
+        <p>{html.escape(config["description"])}</p>
         <div class="workout-chart-grid">
           {"".join(chart_items)}
         </div>
@@ -2520,8 +2564,9 @@ def build() -> None:
         lines = [b["text"] for b in blocks if b.get("type") == "paragraph"]
         article_blocks = [block_to_html(b, variant_lookup, variant_pattern) for b in blocks]
         article_html = "\n        ".join([b for b in article_blocks if b])
-        if episode_label == WORKOUT_PROGRESS_EPISODE:
+        if episode_label in WORKOUT_PROGRESS_CONFIG:
             workout_html = render_workout_progress_section(
+                episode_label,
                 post_image_dir,
                 f"../assets/images/{post_slug}",
             )
