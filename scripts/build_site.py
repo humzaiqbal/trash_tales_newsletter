@@ -50,6 +50,16 @@ WORKOUT_PROGRESS_CONFIG = {
             "normalizes progress instead of adding all three sets into total volume."
         ),
     },
+    "83": {
+        "dates": {dt.date(2026, 7, 7), dt.date(2026, 7, 9)},
+        "metric": "average_load",
+        "description": (
+            "Charts below show progress through 7/9/2026 for every exercise from the "
+            "7/7/2026 and 7/9/2026 workouts; later dates are excluded. Weighted exercises "
+            "use average load per rep across the logged sets. Bodyweight or non-numeric "
+            "load entries use average reps or time per set."
+        ),
+    },
 }
 WORKOUT_XLSX_NS = {
     "main": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
@@ -2341,6 +2351,16 @@ def workout_metric(
             return sum(weights) / len(weights), "average logged load"
         return None, "average load per rep"
 
+    if metric_mode == "average_reps":
+        numeric_sets = [
+            parse_numeric(reps)
+            for reps, _ in sets
+            if parse_numeric(reps) is not None
+        ]
+        if numeric_sets:
+            return sum(numeric_sets) / len(numeric_sets), "average reps/time per set"
+        return None, "average reps/time per set"
+
     if has_volume:
         return volume, "total volume"
     if reps_total:
@@ -2486,10 +2506,22 @@ def render_workout_progress_section(
     for exercise in target_exercises:
         by_date: Dict[dt.date, float] = {}
         metric_label = "logged work"
+        metric_mode = config["metric"]
+        if metric_mode == "average_load":
+            target_rows = [
+                row
+                for row in rows
+                if row["exercise"] == exercise and row["date"] in config["dates"]
+            ]
+            if not any(
+                workout_metric(row["sets"], "average_load")[0] is not None
+                for row in target_rows
+            ):
+                metric_mode = "average_reps"
         for row in rows:
             if row["exercise"] != exercise or row["date"] > progress_cutoff:
                 continue
-            metric, row_metric_label = workout_metric(row["sets"], config["metric"])
+            metric, row_metric_label = workout_metric(row["sets"], metric_mode)
             if metric is None:
                 continue
             metric_label = row_metric_label
