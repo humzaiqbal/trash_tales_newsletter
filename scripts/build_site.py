@@ -60,6 +60,15 @@ WORKOUT_PROGRESS_CONFIG = {
             "load entries use average reps or time per set."
         ),
     },
+    "84": {
+        "dates": {dt.date(2026, 7, 16)},
+        "metric": "average_load",
+        "description": (
+            "Charts below show progress through 7/16/2026 for every exercise from the "
+            "7/16/2026 workout; later dates are excluded. The metric is average load per "
+            "rep across the logged sets rather than total volume."
+        ),
+    },
 }
 WORKOUT_XLSX_NS = {
     "main": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
