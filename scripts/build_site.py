@@ -26,7 +26,12 @@ POSTS_DIR = SITE_DIR / "posts"
 ASSETS_DIR = SITE_DIR / "assets"
 IMAGES_DIR = ASSETS_DIR / "images"
 CHARACTER_LIST_FILE = SOURCE_DIR / "Character List.docx"
-WORKOUT_LOG_FILE = SOURCE_DIR / "Trash Tales - Workout Log.xlsx"
+WORKOUT_LOG_CANDIDATES = sorted(SOURCE_DIR.glob("*Workout Log.xlsx"))
+WORKOUT_LOG_FILE = (
+    WORKOUT_LOG_CANDIDATES[0]
+    if WORKOUT_LOG_CANDIDATES
+    else SOURCE_DIR / "Workout Log.xlsx"
+)
 ASSET_VERSION = "20260710a"
 IMAGE_MAX_WIDTH = 1600
 IMAGE_WEBP_QUALITY = 84
@@ -88,6 +93,7 @@ WORKOUT_XLSX_NS = {
 QUOTED_NICKNAMES = re.compile(r"[\"“”]([^\"“”]+)[\"“”]")
 EPISODE_NUMBER = re.compile(r"episode_(\d+)", re.IGNORECASE)
 EPISODE_LABEL = re.compile(r"episode_([0-9]+(?:-[0-9]+)?)", re.IGNORECASE)
+PRIVATE_AUTHOR_NAME = re.compile(re.escape("Humza" + " Iqbal") + "l?", re.IGNORECASE)
 
 W_NS = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
 A_NS = "http://schemas.openxmlformats.org/drawingml/2006/main"
@@ -897,6 +903,7 @@ def is_excerpt_skippable_line(line: str) -> bool:
 
 
 def normalize_episode_text(text: str, episode_label: str) -> str:
+    text = PRIVATE_AUTHOR_NAME.sub("Trash Tales", text)
     replacements = EPISODE_TEXT_REPLACEMENTS.get(episode_label, {})
     for old, new in replacements.items():
         text = text.replace(old, new)
@@ -1227,7 +1234,7 @@ def render_post_html(
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{html.escape(title)} | Trash Tales</title>
-  <meta name="description" content="Weekly Trash Tales newsletter archive by Trash Tales." />
+  <meta name="description" content="Weekly Trash Tales newsletter archive." />
   <link rel="stylesheet" href="../assets/styles.css?v={ASSET_VERSION}" />
 </head>
 <body>
@@ -1275,7 +1282,7 @@ def render_index_html(posts: List[dict]) -> str:
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Trash Tales Newsletter</title>
-  <meta name="description" content="Weekly Trash Tales newsletter archive by Trash Tales." />
+  <meta name="description" content="Weekly Trash Tales newsletter archive." />
   <link rel="stylesheet" href="./assets/styles.css?v={ASSET_VERSION}" />
 </head>
 <body>
