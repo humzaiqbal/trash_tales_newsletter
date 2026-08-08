@@ -25,8 +25,16 @@ SITE_DIR = ROOT_DIR / "site"
 POSTS_DIR = SITE_DIR / "posts"
 ASSETS_DIR = SITE_DIR / "assets"
 IMAGES_DIR = ASSETS_DIR / "images"
-CHARACTER_LIST_FILE = SOURCE_DIR / "Character List.docx"
-WORKOUT_LOG_CANDIDATES = sorted(SOURCE_DIR.glob("*Workout Log.xlsx"))
+LOCAL_CHARACTER_LIST_FILE = ROOT_DIR / "Character List.docx"
+CHARACTER_LIST_FILE = (
+    LOCAL_CHARACTER_LIST_FILE
+    if LOCAL_CHARACTER_LIST_FILE.exists()
+    else SOURCE_DIR / "Character List.docx"
+)
+WORKOUT_LOG_CANDIDATES = (
+    sorted(ROOT_DIR.glob("*Workout Log.xlsx"))
+    or sorted(SOURCE_DIR.glob("*Workout Log.xlsx"))
+)
 WORKOUT_LOG_FILE = (
     WORKOUT_LOG_CANDIDATES[0]
     if WORKOUT_LOG_CANDIDATES
@@ -83,6 +91,15 @@ WORKOUT_PROGRESS_CONFIG = {
             "rather than total volume."
         ),
     },
+    "86": {
+        "dates": {dt.date(2026, 7, 30)},
+        "metric": "average_load",
+        "description": (
+            "The chart below shows Trap Deadlift progress through the 7/30/2026 workout; "
+            "later dates are excluded. The metric is average load per rep across the "
+            "logged sets rather than total volume."
+        ),
+    },
 }
 WORKOUT_XLSX_NS = {
     "main": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
@@ -93,7 +110,14 @@ WORKOUT_XLSX_NS = {
 QUOTED_NICKNAMES = re.compile(r"[\"“”]([^\"“”]+)[\"“”]")
 EPISODE_NUMBER = re.compile(r"episode_(\d+)", re.IGNORECASE)
 EPISODE_LABEL = re.compile(r"episode_([0-9]+(?:-[0-9]+)?)", re.IGNORECASE)
-PRIVATE_AUTHOR_NAME = re.compile(re.escape("Humza" + " Iqbal") + "l?", re.IGNORECASE)
+PRIVATE_AUTHOR_NAME = (
+    re.compile(
+        re.escape(WORKOUT_LOG_FILE.stem.removesuffix(" - Workout Log")) + "l?",
+        re.IGNORECASE,
+    )
+    if WORKOUT_LOG_CANDIDATES
+    else None
+)
 
 W_NS = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
 A_NS = "http://schemas.openxmlformats.org/drawingml/2006/main"
@@ -903,7 +927,8 @@ def is_excerpt_skippable_line(line: str) -> bool:
 
 
 def normalize_episode_text(text: str, episode_label: str) -> str:
-    text = PRIVATE_AUTHOR_NAME.sub("Trash Tales", text)
+    if PRIVATE_AUTHOR_NAME:
+        text = PRIVATE_AUTHOR_NAME.sub("Trash Tales", text)
     replacements = EPISODE_TEXT_REPLACEMENTS.get(episode_label, {})
     for old, new in replacements.items():
         text = text.replace(old, new)
@@ -2591,12 +2616,11 @@ def build() -> None:
     character_defs = parse_character_list(character_lines)
     variant_lookup, variant_pattern = build_variant_lookup(character_defs)
 
-    all_docx = sorted(SOURCE_DIR.glob("*.docx"))
-    episode_files = [
-        p
-        for p in all_docx
-        if p.name.lower().startswith("episode_")
-    ]
+    episode_by_label = {}
+    for source_dir in (SOURCE_DIR, ROOT_DIR):
+        for path in sorted(source_dir.glob("episode_*.docx")):
+            episode_by_label[parse_episode_label(path.name)] = path
+    episode_files = list(episode_by_label.values())
     episode_files = sorted(episode_files, key=lambda p: parse_episode_number(p.name), reverse=True)
 
     index_posts = []
