@@ -94,10 +94,16 @@ WORKOUT_PROGRESS_CONFIG = {
     "86": {
         "dates": {dt.date(2026, 7, 30)},
         "metric": "average_load",
+        "exercise_scope": "through_cutoff",
         "description": (
-            "The chart below shows Trap Deadlift progress through the 7/30/2026 workout; "
-            "later dates are excluded. The metric is average load per rep across the "
-            "logged sets rather than total volume."
+            "The charts below show progress for every exercise logged through 7/30/2026; "
+            "later dates are excluded. Weighted exercises use average load per rep across "
+            "the logged sets rather than total volume. Bodyweight exercises use average "
+            "reps or time per set."
+        ),
+        "note": (
+            "Because of my ultramarathon attempt, I couldn't do squats or deadlifts "
+            "like usual."
         ),
     },
 }
@@ -2540,11 +2546,18 @@ def render_workout_progress_section(
     if not rows:
         return ""
 
+    progress_cutoff = max(config["dates"])
+    include_all_through_cutoff = config.get("exercise_scope") == "through_cutoff"
     target_exercises = []
     seen = set()
     for row in rows:
         exercise = row["exercise"]
-        if row["date"] in config["dates"] and exercise not in seen:
+        is_target_row = (
+            row["date"] <= progress_cutoff
+            if include_all_through_cutoff
+            else row["date"] in config["dates"]
+        )
+        if is_target_row and exercise not in seen:
             target_exercises.append(exercise)
             seen.add(exercise)
 
@@ -2552,7 +2565,6 @@ def render_workout_progress_section(
         return ""
 
     chart_items = []
-    progress_cutoff = max(config["dates"])
     for exercise in target_exercises:
         by_date: Dict[dt.date, float] = {}
         metric_label = "logged work"
@@ -2561,7 +2573,12 @@ def render_workout_progress_section(
             target_rows = [
                 row
                 for row in rows
-                if row["exercise"] == exercise and row["date"] in config["dates"]
+                if row["exercise"] == exercise
+                and (
+                    row["date"] <= progress_cutoff
+                    if include_all_through_cutoff
+                    else row["date"] in config["dates"]
+                )
             ]
             if not any(
                 workout_metric(row["sets"], "average_load")[0] is not None
@@ -2595,10 +2612,15 @@ def render_workout_progress_section(
     if not chart_items:
         return ""
 
+    note_html = (
+        f'\n        <p class="workout-note">* {html.escape(config["note"])}</p>'
+        if config.get("note")
+        else ""
+    )
     return f"""
       <section class="workout-progress">
         <h2>Personal training progress for the week</h2>
-        <p>{html.escape(config["description"])}</p>
+        <p>{html.escape(config["description"])}</p>{note_html}
         <div class="workout-chart-grid">
           {"".join(chart_items)}
         </div>

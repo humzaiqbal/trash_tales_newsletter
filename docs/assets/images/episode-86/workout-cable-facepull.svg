@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" role="img" aria-labelledby="title desc">
+  <title>Cable Facepull progress</title>
+  <desc>average load per rep over time from Apr 7 to Jul 21.</desc>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="72" y="24" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#1f2328">Cable Facepull</text>
+  <text x="72" y="44" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e">average load per rep</text>
+  <line x1="72" y1="302" x2="732" y2="302" stroke="#d7dde4"/>
+  <line x1="72" y1="38" x2="72" y2="302" stroke="#d7dde4"/>
+  <line x1="72" y1="170.0" x2="732" y2="170.0" stroke="#eef1f5"/>
+  <text x="62" y="306.0" text-anchor="end">14.8</text>
+<text x="62" y="174.0" text-anchor="end">28.75</text>
+<text x="62" y="42.0" text-anchor="end">42.7</text>
+  <polyline points="72.0,276.5 116.0,252.8 160.0,205.5 204.0,181.8 248.0,158.2 292.0,134.5 336.0,110.9 380.0,110.9 424.0,87.2 468.0,63.5 512.0,63.5 556.0,63.5 600.0,63.5 644.0,63.5 688.0,63.5 732.0,63.5" fill="none" stroke="#0b57d0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#0b57d0"><circle cx="72.0" cy="276.5" r="4.5"><title>Apr 7: 17.5</title></circle>
+<circle cx="116.0" cy="252.8" r="4.5"><title>Apr 14: 20</title></circle>
+<circle cx="160.0" cy="205.5" r="4.5"><title>Apr 21: 25</title></circle>
+<circle cx="204.0" cy="181.8" r="4.5"><title>Apr 28: 27.5</title></circle>
+<circle cx="248.0" cy="158.2" r="4.5"><title>May 5: 30</title></circle>
+<circle cx="292.0" cy="134.5" r="4.5"><title>May 12: 32.5</title></circle>
+<circle cx="336.0" cy="110.9" r="4.5"><title>May 19: 35</title></circle>
+<circle cx="380.0" cy="110.9" r="4.5"><title>May 26: 35</title></circle>
+<circle cx="424.0" cy="87.2" r="4.5"><title>Jun 2: 37.5</title></circle>
+<circle cx="468.0" cy="63.5" r="4.5"><title>Jun 9: 40</title></circle>
+<circle cx="512.0" cy="63.5" r="4.5"><title>Jun 18: 40</title></circle>
+<circle cx="556.0" cy="63.5" r="4.5"><title>Jun 23: 40</title></circle>
+<circle cx="600.0" cy="63.5" r="4.5"><title>Jul 2: 40</title></circle>
+<circle cx="644.0" cy="63.5" r="4.5"><title>Jul 7: 40</title></circle>
+<circle cx="688.0" cy="63.5" r="4.5"><title>Jul 14: 40</title></circle>
+<circle cx="732.0" cy="63.5" r="4.5"><title>Jul 21: 40</title></circle></g>
+  <text x="72" y="336" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e" text-anchor="start">Apr 7</text>
+  <text x="732" y="336" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e" text-anchor="end">Jul 21</text>
+</svg>

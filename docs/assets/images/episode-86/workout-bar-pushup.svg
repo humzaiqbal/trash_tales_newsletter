@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" role="img" aria-labelledby="title desc">
+  <title>Bar Pushup progress</title>
+  <desc>average load per rep over time from Mar 31 to Jun 2.</desc>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="72" y="24" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#1f2328">Bar Pushup</text>
+  <text x="72" y="44" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e">average load per rep</text>
+  <line x1="72" y1="302" x2="732" y2="302" stroke="#d7dde4"/>
+  <line x1="72" y1="38" x2="72" y2="302" stroke="#d7dde4"/>
+  <line x1="72" y1="170.0" x2="732" y2="170.0" stroke="#eef1f5"/>
+  <text x="62" y="306.0" text-anchor="end">-1.52</text>
+<text x="62" y="174.0" text-anchor="end">11.5</text>
+<text x="62" y="42.0" text-anchor="end">24.52</text>
+  <polyline points="72.0,215.6 145.3,225.8 218.7,235.9 292.0,246.0 365.3,256.2 438.7,266.3 512.0,266.3 585.3,63.5 658.7,276.5 732.0,276.5" fill="none" stroke="#0b57d0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#0b57d0"><circle cx="72.0" cy="215.6" r="4.5"><title>Mar 31: 7</title></circle>
+<circle cx="145.3" cy="225.8" r="4.5"><title>Apr 7: 6</title></circle>
+<circle cx="218.7" cy="235.9" r="4.5"><title>Apr 14: 5</title></circle>
+<circle cx="292.0" cy="246.0" r="4.5"><title>Apr 21: 4</title></circle>
+<circle cx="365.3" cy="256.2" r="4.5"><title>Apr 28: 3</title></circle>
+<circle cx="438.7" cy="266.3" r="4.5"><title>May 5: 2</title></circle>
+<circle cx="512.0" cy="266.3" r="4.5"><title>May 12: 2</title></circle>
+<circle cx="585.3" cy="63.5" r="4.5"><title>May 19: 22</title></circle>
+<circle cx="658.7" cy="276.5" r="4.5"><title>May 26: 1</title></circle>
+<circle cx="732.0" cy="276.5" r="4.5"><title>Jun 2: 1</title></circle></g>
+  <text x="72" y="336" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e" text-anchor="start">Mar 31</text>
+  <text x="732" y="336" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e" text-anchor="end">Jun 2</text>
+</svg>

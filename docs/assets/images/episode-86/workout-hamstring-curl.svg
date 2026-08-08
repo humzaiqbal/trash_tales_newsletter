@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" role="img" aria-labelledby="title desc">
+  <title>Hamstring Curl progress</title>
+  <desc>average load per rep over time from Mar 31 to Jul 21.</desc>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="72" y="24" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#1f2328">Hamstring Curl</text>
+  <text x="72" y="44" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e">average load per rep</text>
+  <line x1="72" y1="302" x2="732" y2="302" stroke="#d7dde4"/>
+  <line x1="72" y1="38" x2="72" y2="302" stroke="#d7dde4"/>
+  <line x1="72" y1="170.0" x2="732" y2="170.0" stroke="#eef1f5"/>
+  <text x="62" y="306.0" text-anchor="end">10.2667</text>
+<text x="62" y="174.0" text-anchor="end">43.3333</text>
+<text x="62" y="42.0" text-anchor="end">76.4</text>
+  <polyline points="72.0,276.5 113.2,257.2 154.5,203.3 195.8,183.3 237.0,163.3 278.2,143.4 319.5,143.4 360.8,123.4 402.0,103.5 443.2,83.5 484.5,83.5 525.8,83.5 567.0,83.5 608.2,63.5 649.5,63.5 690.8,63.5 732.0,63.5" fill="none" stroke="#0b57d0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#0b57d0"><circle cx="72.0" cy="276.5" r="4.5"><title>Mar 31: 16.6667</title></circle>
+<circle cx="113.2" cy="257.2" r="4.5"><title>Apr 7: 21.5</title></circle>
+<circle cx="154.5" cy="203.3" r="4.5"><title>Apr 14: 35</title></circle>
+<circle cx="195.8" cy="183.3" r="4.5"><title>Apr 21: 40</title></circle>
+<circle cx="237.0" cy="163.3" r="4.5"><title>Apr 28: 45</title></circle>
+<circle cx="278.2" cy="143.4" r="4.5"><title>May 5: 50</title></circle>
+<circle cx="319.5" cy="143.4" r="4.5"><title>May 12: 50</title></circle>
+<circle cx="360.8" cy="123.4" r="4.5"><title>May 19: 55</title></circle>
+<circle cx="402.0" cy="103.5" r="4.5"><title>May 26: 60</title></circle>
+<circle cx="443.2" cy="83.5" r="4.5"><title>Jun 2: 65</title></circle>
+<circle cx="484.5" cy="83.5" r="4.5"><title>Jun 9: 65</title></circle>
+<circle cx="525.8" cy="83.5" r="4.5"><title>Jun 18: 65</title></circle>
+<circle cx="567.0" cy="83.5" r="4.5"><title>Jun 23: 65</title></circle>
+<circle cx="608.2" cy="63.5" r="4.5"><title>Jul 2: 70</title></circle>
+<circle cx="649.5" cy="63.5" r="4.5"><title>Jul 7: 70</title></circle>
+<circle cx="690.8" cy="63.5" r="4.5"><title>Jul 14: 70</title></circle>
+<circle cx="732.0" cy="63.5" r="4.5"><title>Jul 21: 70</title></circle></g>
+  <text x="72" y="336" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e" text-anchor="start">Mar 31</text>
+  <text x="732" y="336" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e" text-anchor="end">Jul 21</text>
+</svg>
