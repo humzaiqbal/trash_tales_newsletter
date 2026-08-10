@@ -2,6 +2,6 @@
 __pycache__/
 *.pyc
 site/
-episode_*.docx
+[Ee]pisode_*.docx
 Character List.docx
 *Workout Log.xlsx

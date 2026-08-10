@@ -4,6 +4,7 @@ from __future__ import annotations
 import datetime as dt
 import html
 import json
+import math
 import os
 import re
 import shutil
@@ -104,6 +105,17 @@ WORKOUT_PROGRESS_CONFIG = {
         "note": (
             "Because of my ultramarathon attempt, I couldn't do squats or deadlifts "
             "like usual."
+        ),
+    },
+    "87": {
+        "dates": {dt.date(2026, 8, 6)},
+        "metric": "average_load",
+        "exercise_scope": "through_cutoff",
+        "chart_type": "dotplot",
+        "description": (
+            "The dot plots below show every exercise logged through 8/6/2026; later dates "
+            "are excluded. The x-axis is time, the y-axis is logged weight, and dot size "
+            "represents reps or logged time. Bodyweight sets appear on the BW baseline."
         ),
     },
 }
@@ -2533,6 +2545,124 @@ def render_workout_svg(exercise: str, metric_label: str, points: List[Tuple[dt.d
 """
 
 
+def render_workout_dotplot_svg(exercise: str, rows: List[dict]) -> str:
+    width = 760
+    height = 380
+    left = 82
+    right = width - 28
+    top = 58
+    bottom = height - 66
+    observations = []
+    for row in rows:
+        for set_index, (reps, weight) in enumerate(row["sets"], start=1):
+            weight_num = parse_numeric(weight)
+            is_bodyweight = str(weight).strip().upper() == "BW"
+            if weight_num is None and not is_bodyweight:
+                continue
+            observations.append(
+                {
+                    "date": row["date"],
+                    "set_index": set_index,
+                    "reps": parse_numeric(reps),
+                    "reps_text": str(reps).strip() or "not recorded",
+                    "weight": 0.0 if is_bodyweight else weight_num,
+                    "weight_text": "BW" if is_bodyweight else f"{weight_num:g}",
+                    "is_bodyweight": is_bodyweight,
+                }
+            )
+
+    if not observations:
+        return ""
+
+    first_date = min(point["date"] for point in observations)
+    last_date = max(point["date"] for point in observations)
+    date_span = max(1, (last_date - first_date).days)
+    has_bodyweight = any(point["is_bodyweight"] for point in observations)
+    numeric_weights = [
+        point["weight"]
+        for point in observations
+        if not point["is_bodyweight"]
+    ]
+    max_weight = max(numeric_weights) if numeric_weights else 1.0
+    min_weight = min(numeric_weights) if numeric_weights else 0.0
+    if has_bodyweight:
+        min_domain = 0.0
+        max_domain = max(1.0, max_weight * 1.1)
+    elif min_weight == max_weight:
+        padding = max(1.0, max_weight * 0.1)
+        min_domain = max(0.0, min_weight - padding)
+        max_domain = max_weight + padding
+    else:
+        padding = (max_weight - min_weight) * 0.12
+        min_domain = max(0.0, min_weight - padding)
+        max_domain = max_weight + padding
+
+    max_reps = max(
+        (point["reps"] for point in observations if point["reps"] is not None),
+        default=1.0,
+    )
+
+    def x_for(date: dt.date, set_index: int, set_count: int) -> float:
+        if first_date == last_date:
+            base = (left + right) / 2
+        else:
+            elapsed = (date - first_date).days
+            base = left + ((right - left) * elapsed / date_span)
+        jitter = (set_index - (set_count + 1) / 2) * 7
+        return min(right, max(left, base + jitter))
+
+    def y_for(weight: float) -> float:
+        return bottom - ((weight - min_domain) * (bottom - top) / (max_domain - min_domain))
+
+    by_date: Dict[dt.date, List[dict]] = {}
+    for point in observations:
+        by_date.setdefault(point["date"], []).append(point)
+
+    circles = []
+    for date in sorted(by_date):
+        date_points = by_date[date]
+        for point in date_points:
+            reps = point["reps"]
+            radius = 4.5 if reps is None else 4.5 + 8 * math.sqrt(max(0.0, reps) / max_reps)
+            circles.append(
+                (
+                    f'<circle cx="{x_for(date, point["set_index"], len(date_points)):.1f}" '
+                    f'cy="{y_for(point["weight"]):.1f}" r="{radius:.1f}">'
+                    f'<title>{date.strftime("%b %-d")} · Set {point["set_index"]}: '
+                    f'{html.escape(point["weight_text"])} weight, '
+                    f'{html.escape(point["reps_text"])} reps/time</title></circle>'
+                )
+            )
+
+    y_ticks = [min_domain, (min_domain + max_domain) / 2, max_domain]
+    y_labels = []
+    for value in y_ticks:
+        label = "BW" if has_bodyweight and value == 0 else f"{value:g}"
+        y_labels.append(
+            f'<text x="{left - 12}" y="{y_for(value) + 4:.1f}" text-anchor="end">{label}</text>'
+        )
+
+    first_label = first_date.strftime("%b %-d")
+    last_label = last_date.strftime("%b %-d")
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc">
+  <title>{html.escape(exercise)} weight and reps over time</title>
+  <desc>Dot plot from {html.escape(first_label)} to {html.escape(last_label)}. Vertical position is weight and dot size represents reps or time.</desc>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="{left}" y="24" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#1f2328">{html.escape(exercise)}</text>
+  <text x="{left}" y="44" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e">Weight by date · dot size = reps/time</text>
+  <line x1="{left}" y1="{bottom}" x2="{right}" y2="{bottom}" stroke="#d7dde4"/>
+  <line x1="{left}" y1="{top}" x2="{left}" y2="{bottom}" stroke="#d7dde4"/>
+  <line x1="{left}" y1="{y_for(y_ticks[1]):.1f}" x2="{right}" y2="{y_for(y_ticks[1]):.1f}" stroke="#eef1f5"/>
+  {"".join(y_labels)}
+  <g fill="#0b57d0" fill-opacity="0.62" stroke="#0847a8" stroke-width="1">{"".join(circles)}</g>
+  <text x="{left - 52}" y="{(top + bottom) / 2:.1f}" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e" text-anchor="middle" transform="rotate(-90 {left - 52} {(top + bottom) / 2:.1f})">Weight</text>
+  <text x="{left}" y="{height - 30}" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e" text-anchor="start">{html.escape(first_label)}</text>
+  <text x="{right}" y="{height - 30}" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e" text-anchor="end">{html.escape(last_label)}</text>
+  <text x="{(left + right) / 2:.1f}" y="{height - 10}" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e" text-anchor="middle">Time</text>
+</svg>
+"""
+
+
 def render_workout_progress_section(
     episode_label: str,
     image_output_dir: Path,
@@ -2566,6 +2696,26 @@ def render_workout_progress_section(
 
     chart_items = []
     for exercise in target_exercises:
+        if config.get("chart_type") == "dotplot":
+            exercise_rows = [
+                row
+                for row in rows
+                if row["exercise"] == exercise and row["date"] <= progress_cutoff
+            ]
+            chart_svg = render_workout_dotplot_svg(exercise, exercise_rows)
+            if not chart_svg:
+                continue
+            filename = f"workout-{slugify_chart_name(exercise)}.svg"
+            (image_output_dir / filename).write_text(chart_svg, encoding="utf-8")
+            chart_items.append(
+                f"""
+        <figure class="workout-chart-card">
+          <img class="workout-chart" src="{html.escape(image_url_prefix)}/{html.escape(filename)}" loading="lazy" alt="{html.escape(exercise)} weight and reps dot plot" />
+          <figcaption>{html.escape(exercise)} — weight over time; dot size represents reps/time</figcaption>
+        </figure>"""
+            )
+            continue
+
         by_date: Dict[dt.date, float] = {}
         metric_label = "logged work"
         metric_mode = config["metric"]
@@ -2640,7 +2790,9 @@ def build() -> None:
 
     episode_by_label = {}
     for source_dir in (SOURCE_DIR, ROOT_DIR):
-        for path in sorted(source_dir.glob("episode_*.docx")):
+        for path in sorted(source_dir.glob("*.docx")):
+            if not path.name.lower().startswith("episode_"):
+                continue
             episode_by_label[parse_episode_label(path.name)] = path
     episode_files = list(episode_by_label.values())
     episode_files = sorted(episode_files, key=lambda p: parse_episode_number(p.name), reverse=True)
