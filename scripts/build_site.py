@@ -41,7 +41,7 @@ WORKOUT_LOG_FILE = (
     if WORKOUT_LOG_CANDIDATES
     else SOURCE_DIR / "Workout Log.xlsx"
 )
-ASSET_VERSION = "20260710a"
+ASSET_VERSION = "20260822a"
 IMAGE_MAX_WIDTH = 1600
 IMAGE_WEBP_QUALITY = 84
 WORKOUT_PROGRESS_CONFIG = {
@@ -1357,7 +1357,7 @@ def render_index_html(posts: List[dict]) -> str:
           id="archive-search"
           class="search-input"
           type="search"
-          placeholder="Search keywords across all episodes"
+          placeholder="Search an exact phrase across all episodes"
           autocomplete="off"
           spellcheck="false"
         />
@@ -2172,17 +2172,9 @@ html, body {
     return posts;
   }
 
-  function buildSnippet(post, queryTerms) {
+  function buildSnippet(post, query) {
     const source = post.content || post.excerpt || "";
-    const lowerSource = source.toLowerCase();
-    let matchIndex = -1;
-
-    for (const term of queryTerms) {
-      const idx = lowerSource.indexOf(term);
-      if (idx !== -1 && (matchIndex === -1 || idx < matchIndex)) {
-        matchIndex = idx;
-      }
-    }
+    const matchIndex = normalize(source).indexOf(query);
 
     if (matchIndex === -1) {
       return post.excerpt || source.slice(0, 240);
@@ -2196,12 +2188,12 @@ html, body {
     return snippet;
   }
 
-  function renderCards(results, queryTerms) {
+  function renderCards(results, query) {
     grid.innerHTML = results.map((post) => `
       <article class="post-card">
         <p class="post-meta">${escapeHtml(post.date)}</p>
         <h2><a href="${escapeHtml(post.url)}">${escapeHtml(post.title)}</a></h2>
-        <p>${escapeHtml(buildSnippet(post, queryTerms))}</p>
+        <p>${escapeHtml(buildSnippet(post, query))}</p>
         <a class="read-more" href="${escapeHtml(post.url)}">Read post</a>
       </article>
     `).join("");
@@ -2222,13 +2214,12 @@ html, body {
 
     try {
       const data = await loadSearchIndex();
-      const terms = query.split(" ").filter(Boolean);
       const results = data.filter((post) => {
         const haystack = normalize(`${post.title} ${post.content}`);
-        return terms.every((term) => haystack.includes(term));
+        return haystack.includes(query);
       });
 
-      renderCards(results, terms);
+      renderCards(results, query);
       const label = results.length === 1 ? "result" : "results";
       setStatus(`${results.length} ${label} for "${input.value.trim()}"`);
     } catch (error) {

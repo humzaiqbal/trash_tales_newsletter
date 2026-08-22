@@ -118,17 +118,9 @@
     return posts;
   }
 
-  function buildSnippet(post, queryTerms) {
+  function buildSnippet(post, query) {
     const source = post.content || post.excerpt || "";
-    const lowerSource = source.toLowerCase();
-    let matchIndex = -1;
-
-    for (const term of queryTerms) {
-      const idx = lowerSource.indexOf(term);
-      if (idx !== -1 && (matchIndex === -1 || idx < matchIndex)) {
-        matchIndex = idx;
-      }
-    }
+    const matchIndex = normalize(source).indexOf(query);
 
     if (matchIndex === -1) {
       return post.excerpt || source.slice(0, 240);
@@ -142,12 +134,12 @@
     return snippet;
   }
 
-  function renderCards(results, queryTerms) {
+  function renderCards(results, query) {
     grid.innerHTML = results.map((post) => `
       <article class="post-card">
         <p class="post-meta">${escapeHtml(post.date)}</p>
         <h2><a href="${escapeHtml(post.url)}">${escapeHtml(post.title)}</a></h2>
-        <p>${escapeHtml(buildSnippet(post, queryTerms))}</p>
+        <p>${escapeHtml(buildSnippet(post, query))}</p>
         <a class="read-more" href="${escapeHtml(post.url)}">Read post</a>
       </article>
     `).join("");
@@ -168,13 +160,12 @@
 
     try {
       const data = await loadSearchIndex();
-      const terms = query.split(" ").filter(Boolean);
       const results = data.filter((post) => {
         const haystack = normalize(`${post.title} ${post.content}`);
-        return terms.every((term) => haystack.includes(term));
+        return haystack.includes(query);
       });
 
-      renderCards(results, terms);
+      renderCards(results, query);
       const label = results.length === 1 ? "result" : "results";
       setStatus(`${results.length} ${label} for "${input.value.trim()}"`);
     } catch (error) {
