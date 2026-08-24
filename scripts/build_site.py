@@ -129,6 +129,17 @@ WORKOUT_PROGRESS_CONFIG = {
             "represents reps or logged time. Bodyweight sets appear on the BW baseline."
         ),
     },
+    "89": {
+        "dates": {dt.date(2026, 8, 20)},
+        "metric": "average_load",
+        "exercise_scope": "through_cutoff",
+        "chart_type": "dotplot",
+        "description": (
+            "The dot plots below show every exercise logged through 8/20/2026; later dates "
+            "are excluded. The x-axis is time, the y-axis is logged weight, and dot size "
+            "represents reps or logged time. Bodyweight sets appear on the BW baseline."
+        ),
+    },
 }
 WORKOUT_XLSX_NS = {
     "main": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",

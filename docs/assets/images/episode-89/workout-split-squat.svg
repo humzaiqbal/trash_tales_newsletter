@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" role="img" aria-labelledby="title desc">
+  <title>Split Squat weight and reps over time</title>
+  <desc>Dot plot from Jul 28 to Jul 28. Vertical position is weight and dot size represents reps or time.</desc>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="82" y="24" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#1f2328">Split Squat</text>
+  <text x="82" y="44" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e">Weight by date · dot size = reps/time</text>
+  <line x1="82" y1="314" x2="732" y2="314" stroke="#d7dde4"/>
+  <line x1="82" y1="58" x2="82" y2="314" stroke="#d7dde4"/>
+  <line x1="82" y1="186.0" x2="732" y2="186.0" stroke="#eef1f5"/>
+  <text x="70" y="318.0" text-anchor="end">BW</text><text x="70" y="190.0" text-anchor="end">9.9</text><text x="70" y="62.0" text-anchor="end">19.8</text>
+  <g fill="#0b57d0" fill-opacity="0.62" stroke="#0847a8" stroke-width="1"><circle cx="400.0" cy="314.0" r="12.5"><title>Jul 28 · Set 1: BW weight, 10.0 reps/time</title></circle><circle cx="407.0" cy="81.3" r="12.5"><title>Jul 28 · Set 2: 18 weight, 10.0 reps/time</title></circle><circle cx="414.0" cy="81.3" r="12.5"><title>Jul 28 · Set 3: 18 weight, 10.0 reps/time</title></circle></g>
+  <text x="30" y="186.0" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e" text-anchor="middle" transform="rotate(-90 30 186.0)">Weight</text>
+  <text x="82" y="350" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e" text-anchor="start">Jul 28</text>
+  <text x="732" y="350" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e" text-anchor="end">Jul 28</text>
+  <text x="407.0" y="370" font-family="Inter, Arial, sans-serif" font-size="12" fill="#59636e" text-anchor="middle">Time</text>
+</svg>
